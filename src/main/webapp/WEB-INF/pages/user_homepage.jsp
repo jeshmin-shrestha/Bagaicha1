@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <title>PlantCare Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-color: #2c6e49;
@@ -111,7 +112,7 @@ body {
         }
         
         .section-title::before {
-            content: '';
+            
             position: absolute;
             left: 0;
             top: 5px;
@@ -133,7 +134,7 @@ body {
             padding: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            border-left: 4px solid var(--primary-color);
+            height:200px;
             display: flex;
             align-items: center;
         }
@@ -188,7 +189,7 @@ body {
         }
         
         .plant-card {
-            background-color: #CCCCCC;
+            background-color: #C3CDB2;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -250,7 +251,19 @@ body {
             text-align: center;
             margin-top: 30px;
         }
-        
+        .search-input {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            min-width: 200px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.2);
+        }
         .browse-all-btn {
             display: inline-block;
             background-color: transparent;
@@ -271,6 +284,7 @@ body {
         /* CTA Section */
         .cta-section {
             margin: 50px 0;
+            
         }
         
         .cta-cards {
@@ -280,8 +294,9 @@ body {
             margin-top: 20px;
         }
         
+        
         .cta-card {
-            background-color: var(--card-bg);
+            background-color: #C3CDB2;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);

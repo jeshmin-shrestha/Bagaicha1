@@ -111,10 +111,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            
             transition: all 0.3s ease;
         }
         
@@ -124,8 +124,8 @@
         }
         
         .social-icons img {
-            width: 60%;
-            height: 60%;
+            width:80px;
+            height: 80px;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
@@ -237,8 +237,8 @@
                 
                 <div class="social-icons">
                     <a href="#" aria-label="Email"><img src="resources/images/system/mail_icon.png" alt="Email"></a>
-                    <a href="#" aria-label="Facebook"><img src="resources/images/system/mail_icon.png" alt="Facebook"></a>
-                    <a href="#" aria-label="Instagram"><img src="resources/images/system/mail_icon.png" alt="Instagram"></a>
+                    <a href="#" aria-label="Facebook"><img src="resources/images/system/facebook_icon.png" alt="Facebook"></a>
+                    <a href="#" aria-label="Twitter"><img src="resources/images/system/twitter_icon.png" alt="Twitter"></a>
                     <a href="#" aria-label="YouTube"><img src="resources/images/system/yt_icon.png" alt="YouTube"></a>
                 </div>
             </div>

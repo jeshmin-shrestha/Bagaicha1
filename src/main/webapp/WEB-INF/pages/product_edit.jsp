@@ -1,0 +1,530 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Plant | Bagaicha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --light-green: #C3CDB2;
+            --soft-green: #d0d9cd;
+            --accent-orange: #F0AD4E;
+            --danger-red: #D9534F;
+            --success-green: #5CB85C;
+            --neutral-gray: #9E9E9E;
+            --dark-text: #2D3748;
+            --light-text: #718096;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f7f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+      
+       /* Welcome Section */
+        .welcome-section {
+            background:#C3CDB2;
+            color: #2E7D32;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(44, 110, 73, 0.2);
+        }
+        
+        .welcome-content {
+            max-width: 60%;
+            height:200px;
+            z-index: 2;
+            position: relative;
+            padding:40px;
+        }
+        
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            color:#808080
+        }
+        
+        .bot-icon {
+            position: absolute;
+            top: 15px;
+            right: 60px;
+            width: 200px;
+            height: 200px;
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        /* Waving animation */
+        @keyframes wave {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(10px) rotate(5deg); }
+            50% { transform: translateX(0) rotate(0deg); }
+            75% { transform: translateX(-10px) rotate(-5deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+        
+        
+
+        /* Main Content */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .edit-card {
+            background-color:#C3CDB2;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+        }
+
+        .edit-header {
+            background-color:#2c6e49;;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .edit-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .edit-body {
+            padding: 30px;
+        }
+
+        /* Image Preview */
+        .image-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .image-preview {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .image-preview img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid var(--primary-green);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .image-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid currentColor;
+        }
+
+        .btn-replace {
+            background-color: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .btn-remove {
+            background-color: transparent;
+            color: var(--danger-red);
+            border: 1px solid var(--danger-red);
+        }
+/* Button Hover Effects */
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+/* Specific hover colors for each button */
+.btn-cancel:hover {
+    background-color: #7a7a7a;
+}
+
+.btn-delete:hover {
+    background-color: #c9302c;
+}
+
+.btn-update:hover {
+    background-color: #ec971f;
+}
+
+.btn-add:hover {
+    background-color: #449d44;
+}
+
+.btn-replace:hover {
+    background-color: #ec971f;
+}
+
+.btn-remove:hover {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn-cancel {
+            background-color: var(--neutral-gray);
+            color: var(--white);
+        }
+
+        .btn-delete {
+            background-color: var(--danger-red);
+            color: var(--white);
+        }
+
+        .btn-update {
+            background-color: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .btn-add {
+            background-color: var(--success-green);
+            color: var(--white);
+        }
+        .search-input {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            min-width: 200px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.2);
+        }
+        
+      /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .welcome-section {
+                padding: 30px;
+            }
+            
+            .welcome-content {
+                max-width: 100%;
+            }
+            
+          
+    .bot-icon {
+        display: block; /* Ensure it is visible */
+        top: 15px; /* Keep it aligned at the top */
+        right: 10px; /* Adjust the position slightly for smaller screens */
+        width: 150px; /* Keep it visible but reduce size for mobile */
+        height: 150px; /* Same as width to maintain aspect ratio */
+        animation: wave 3s ease-in-out infinite; /* Keep the animation */
+    }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .welcome-section {
+                padding: 30px;
+            }
+            
+            .welcome-content {
+                max-width: 100%;
+            }
+            
+            .bot-icon {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 20px auto 0;
+                width: 120px;
+                height: 120px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .action-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .edit-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .image-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+         @media (max-width: 768px) {
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+            }
+    </style>
+</head>
+<body>
+    <!-- Header Include -->
+    <jsp:include page="header.jsp" />
+
+    <!-- Welcome Section -->
+    <div class="welcome-section container">
+        <div class="welcome-content">
+            <h1>Welcome Back, Plant Lover!</h1>
+            <p>Let's make your plants thrive!</p>
+        </div>
+        <img src="resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="edit-card">
+            <div class="edit-header">
+                <h3>Plant </h3>
+            </div>
+
+            <form method="post" action="PlantController" enctype="multipart/form-data" class="edit-body">
+                <!-- Image Section -->
+                <div class="image-section">
+                    
+				<!-- Image Upload Row -->
+				<div class="form-row">
+					<div class="form-group full-width">
+						<label for="form-image"> Image</label>
+						<input type="file" id="form-image" name="image" accept="image/*" required>
+					</div>
+				</div>
+                    <div class="image-actions">
+                        <button type="button" class="btn btn-sm btn-replace">
+                            
+                            Replace
+                        </button>
+                        <button type="button" class="btn btn-sm btn-remove">
+                            
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form Fields -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="plantName">Plant Name</label>
+                        <input type="text" name="plantName" id="plantName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="scientificName">Scientific Name</label>
+                        <input type="text" name="scientificName" id="scientificName"required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plantCategory">Plant Category</label>
+                        <select name="plantCategory" id="plantCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="succulent" >Succulent</option>
+                            <option value="flowering">Flowering</option>
+                            <option value="herb">Herb</option>
+                            <option value="shrub">Shrub</option>
+                            <option value="tree">Tree</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="soilType">Soil Type</label>
+                        <select name="soilType" id="soilType" required>
+                            <option value="">Select Soil</option>
+                            <option value="sandy" >Sandy</option>
+                            <option value="loamy">Loamy</option>
+                            <option value="clay">Clay</option>
+                            <option value="peaty">Peaty</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fertilizer">Fertilizer Requirement</label>
+                        <select name="fertilizer" id="fertilizer" required>
+                            <option value="">Select Fertilizer</option>
+                            <option value="low" >Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sunlight">Sunlight Requirement</label>
+                        <select name="sunlight" id="sunlight" required>
+                            <option value="">Select Sunlight</option>
+                            <option value="full" >Full Sun</option>
+                            <option value="partial">Partial Sun</option>
+                            <option value="shade">Shade</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="season">Blooming Season</label>
+                        <select name="season" id="season">
+                            <option value="">Select Season</option>
+                            <option value="summer">Summer</option>
+                            <option value="winter">Winter</option>
+                            <option value="spring">Spring</option>
+                            <option value="fall">Fall</option>
+                            <option value="none" >Doesn't Bloom</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="water">Water Frequency</label>
+                        <select name="water" id="water" required>
+                            <option value="">Select Frequency</option>
+                            <option value="rare" >Rarely</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="biweekly">Bi-weekly</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="description">Care Description</label>
+                        <textarea name="description" id="description" placeholder="Provide detailed care instructions for this plant..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-delete" name="action" value="delete">Delete Plant</button>
+                    <button type="submit" class="btn btn-update" name="action" value="update">Update Plant</button>
+                    <button type="submit" class="btn btn-add" name="action" value="add">Add New Plant</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <jsp:include page="footer.jsp" />
+</body>
+</html>

@@ -1,12 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Contact Us | Bagaicha</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
+@charset "UTF-8";
+:root {
             --primary-green: #2c6e49;
             --secondary-green: #4c956c;
             --light-green: #c3cdb2;
@@ -27,11 +20,12 @@
 
         /* Header Section */
         .contact-header {
-            background-color: var(--light-green);
             text-align: center;
             padding: 80px 20px 40px;
             position: relative;
             overflow: hidden;
+            background:url('resources/images/system/contactus.png');
+            height:950px;
         }
 
         .contact-header h1 {
@@ -71,7 +65,7 @@
         }
 
         .contact-card {
-            background: linear-gradient(to right, #bcd9a7, #d9e8c0);
+            background: #C3CDB2;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -139,7 +133,7 @@ input-wrapper {
         }
 
         .info-item {
-                          background: linear-gradient(to right, #bcd9a7, #d9e8c0);
+                          background: #C3CDB2;
 
     padding: 20px 30px;
     border-radius: 8px;
@@ -156,8 +150,9 @@ input-wrapper {
     background-color: var(--light-green);
 }
         .info-icon {
-            font-size: 1.5rem;
-            color: var(--primary-green);
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
         }
 
         /* Map Section */
@@ -190,95 +185,50 @@ input-wrapper {
 }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .contact-header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .contact-card {
-                padding: 30px;
-            }
-            
-            .form-section {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Include Header -->
-    <jsp:include page="header.jsp" />
+       /* Enhance contact-header image responsiveness */
+@media (max-width: 1800px) {
+    .contact-header {
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        padding: 60px 15px 30px;
+    }
 
-    <!-- Contact Header -->
-    <section class="contact-header">
-        <h1>CONTACT US</h1>
-    </section>
+    .info-icon {
+        width: 80px;
+        height: 80px;
+    }
 
-    <!-- Main Content -->
-    <div class="contact-container">
-        <!-- Form Section -->
-        <section class="form-section">
-            <!-- Contact Form -->
-            <div class="contact-card">
-                <h3>🌿 Send Us a Message</h3>
-                <form method="post" action="ContactServlet">
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" name="phone" class="form-control" placeholder="Phone Number">
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
+    .info-item {
+        flex-direction: column;
+        text-align: center;
+    }
 
-            <!-- Newsletter Form -->
-<div class="contact-card" >
-    <h3 style="font-size: 1.7rem; margin-bottom: 10px;">🌿 Join Our Green Letter</h3>
-    <p style="margin-bottom: 25px; color: #2c6e49; font-weight: 500;">
-        One email. Once a month. Everything you need to grow better.
-    </p>
-     <form action="subscribe.jsp" method="post" class="subscribe-form">
-                    <div class="input-wrapper">
-                        <input type="email" name="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
-                    </div>
-                </form>
-    <p style="font-size: 0.8rem; margin-top: 15px; color: #333;">
-        We hate spam. Unsubscribe anytime.
-    </p>
-</div>
-    </section>
+    .info-item span {
+        font-size: 1rem;
+        padding-top: 8px;
+    }
+}
 
-        <!-- Contact Info -->
-        <section class="contact-info">
-            <div class="info-item">
-                <span class="info-icon">📞</span>
-                <span>+977 9812345678</span>
-            </div>
-            <div class="info-item">
-                <span class="info-icon">✉️</span>
-                <span>Bagaicha@gmail.com</span>
-            </div>
-            <div class="info-item">
-                <span class="info-icon">📍</span>
-                <span>Kathmandu, Nepal</span>
-            </div>
-        </section>
+@media (max-width: 480px) {
+    .contact-header {
+        background-size: cover;
+        background-position: center center;
+        height: 350px;
+        padding: 50px 10px 20px;
+    }
 
-        <!-- Map Section -->
-        <section class="map-container">
-            <iframe src="https://maps.google.com/maps?q=kathmandu&t=&z=13&ie=UTF8&iwloc=&output=embed" ></iframe>
-        </section>
-    </div>
+    .info-item {
+        width: 90%;
+        padding: 15px;
+    }
 
-    <!-- Include Footer -->
-    <jsp:include page="footer.jsp" />
-</body>
-</html>
+    .info-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .info-item span {
+        font-size: 0.95rem;
+    }
+}
