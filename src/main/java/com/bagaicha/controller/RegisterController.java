@@ -148,7 +148,7 @@ public class RegisterController extends HttpServlet {
 
 	private String validateRegistrationForm(HttpServletRequest req) {
 
-		@SuppressWarnings("unused")
+
 
 		String fullName = req.getParameter("fullName");
 
@@ -167,6 +167,7 @@ public class RegisterController extends HttpServlet {
 
 
         // Empty field checks
+        if (ValidationUtil.isNullOrEmpty(fullName)) return "fullName is required.";
 
         if (ValidationUtil.isNullOrEmpty(username)) return "Username is required.";
 
@@ -199,8 +200,8 @@ public class RegisterController extends HttpServlet {
         try {
 
             Part image = req.getPart("image");
-//            String imageName = imageUtil.getFileName(Part);
-//            user.setImage(imageName);
+//          String imageName = imageUtil.getFileName(image);
+//         user.setUserImage(imageName);
 
             if (image == null || image.getSize() == 0) {
 
@@ -251,7 +252,7 @@ public class RegisterController extends HttpServlet {
 	    userPassword = PasswordUtil.encrypt(userName, userPassword);
 
 	    UserModel user = new UserModel();
-
+	
 	    user.setFullName(fullName);
 	    user.setUserName(userName);
 	    user.setUserEmail(userEmail);
@@ -262,6 +263,8 @@ public class RegisterController extends HttpServlet {
 	    user.setLastLogin(null); // to be set at login time
 
 	    return user;
+	    
+	   
 	}
 
 
@@ -284,9 +287,9 @@ public class RegisterController extends HttpServlet {
 
 			throws ServletException, IOException {
 
-		req.getSession().setAttribute("success", message);
+		req.getSession().setAttribute("success", "Registration successful! Please log in");
 
-	    resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to home page
+	    resp.sendRedirect(req.getContextPath() + "/login"); // Redirect to home page
 
 	}
 
@@ -300,13 +303,13 @@ public class RegisterController extends HttpServlet {
 
         req.setAttribute("fullName", req.getParameter("fullName"));
 
-        req.setAttribute("username", req.getParameter("username"));
+        req.setAttribute("userName", req.getParameter("userName"));
 
-        req.setAttribute("email", req.getParameter("email"));
+        req.setAttribute("userEmail", req.getParameter("userEmail"));
 
-        req.setAttribute("phoneNumber", req.getParameter("phoneNumber"));
+        req.setAttribute("userPhoneNo", req.getParameter("userPhoneNo"));
 
-        req.setAttribute("address", req.getParameter("address"));
+        req.setAttribute("userAddress", req.getParameter("userAddress"));
 
         req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
 

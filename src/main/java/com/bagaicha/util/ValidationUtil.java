@@ -110,6 +110,7 @@ public class ValidationUtil {
     public static boolean isValidLastLogin(java.sql.Timestamp lastLogin) {
         return lastLogin == null || lastLogin.before(new java.sql.Timestamp(System.currentTimeMillis()));
     }
+    
 
 
 }

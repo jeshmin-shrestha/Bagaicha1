@@ -34,22 +34,25 @@ public class LoginService {
 	/**
 	 * Validates the user credentials against the database records.
 	 *
-	 * @param studentModel the StudentModel object containing user credentials
-	 * @return true if the user credentials are valid, false otherwise; null if a
-	 *         connection error occurs
-	 */
+	 * @param userModel the UserModel object containing user credentials
+ * @return true if the credentials are valid, false otherwise; null if a connection error occurs
+ */
 	public Boolean loginUser(UserModel userModel) {
 		if (isConnectionError) {
 			System.out.println("Connection Error!");
 			return null;
 		}
 
-		String query = "SELECT username, password FROM student WHERE username = ?";
+		String query = "SELECT userName, userPassword FROM user WHERE userName = ?";
 		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 			stmt.setString(1, userModel.getUserName());
 			ResultSet result = stmt.executeQuery();
 
 			if (result.next()) {
+				String dbUsername = result.getString("userName");
+	            String dbPassword = result.getString("userPassword");
+	            
+	            System.out.println("DEBUG - Stored encrypted password: " + dbPassword);
 				return validatePassword(result, userModel);
 			}
 		} catch (SQLException e) {
@@ -70,8 +73,8 @@ public class LoginService {
 	 * @throws SQLException if a database access error occurs
 	 */
 	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
-		String dbUsername = result.getString("username");
-		String dbPassword = result.getString("password");
+		String dbUsername = result.getString("userName");
+		String dbPassword = result.getString("userPassword");
 
 		return dbUsername.equals(userModel.getUserName())
 				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getUserPassword());

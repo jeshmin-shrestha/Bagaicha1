@@ -6,6 +6,7 @@ import com.bagaicha.model.UserModel;
 import com.bagaicha.service.LoginService;
 import com.bagaicha.util.CookieUtil;
 import com.bagaicha.util.SessionUtil;
+import com.bagaicha.util.ValidationUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,9 +21,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(asyncSupported = true, urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private final LoginService loginService;
-
+	private ValidationUtil ValidationUtil;
+	
+	private LoginService loginService;
 	/**
 	 * Constructor initializes the LoginService.
 	 */
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/pages/auth.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 	}
 
 	/**
@@ -54,24 +55,28 @@ public class LoginController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String userName = req.getParameter("userName");
+		String userPassword = req.getParameter("userPassword");
 
-		UserModel userModel = new UserModel(username, password);
-		Boolean loginStatus = loginService.loginUser(userModel);
+		if (!ValidationUtil.isNullOrEmpty(userName) && !ValidationUtil.isNullOrEmpty(userPassword)) {
+			UserModel userModel = new UserModel(userName, userPassword);
+			Boolean loginStatus = loginService.loginUser(userModel);
 
-		if (loginStatus != null && loginStatus) {
-			SessionUtil.setAttribute(req, "username", username);
-			if (username.equals("admin")) {
-				CookieUtil.addCookie(resp, "role", "admin", 5 * 30);
-				resp.sendRedirect(req.getContextPath() + "/dashboard"); // Redirect to /home
+			if (loginStatus != null && loginStatus) {
+				SessionUtil.setAttribute(req, "userName", userName);
+				if (userName.equals("admin")) {
+					CookieUtil.addCookie(resp, "role", "admin", 5 * 30);
+					resp.sendRedirect(req.getContextPath() + "/dashboard"); // Redirect to /home
+				} else {
+					CookieUtil.addCookie(resp, "role", "user", 5 * 30);
+					resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
+				}
 			} else {
-				CookieUtil.addCookie(resp, "role", "student", 5 * 30);
-				resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
+				handleLoginFailure(req, resp, loginStatus);
 			}
-		} else {
-			handleLoginFailure(req, resp, loginStatus);
 		}
+		
+		
 	}
 
 	/**
