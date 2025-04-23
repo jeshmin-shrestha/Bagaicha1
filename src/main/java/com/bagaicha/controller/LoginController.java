@@ -55,29 +55,32 @@ public class LoginController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userName = req.getParameter("userName");
-		String userPassword = req.getParameter("userPassword");
+	    String userName = req.getParameter("username");
+	    String userPassword = req.getParameter("password");
 
-		if (!ValidationUtil.isNullOrEmpty(userName) && !ValidationUtil.isNullOrEmpty(userPassword)) {
-			UserModel userModel = new UserModel(userName, userPassword);
-			Boolean loginStatus = loginService.loginUser(userModel);
+	    if (!ValidationUtil.isNullOrEmpty(userName) && !ValidationUtil.isNullOrEmpty(userPassword)) {
+	        UserModel userModel = new UserModel(userName, userPassword);
+	        Boolean loginStatus = loginService.loginUser(userModel);
 
-			if (loginStatus != null && loginStatus) {
-				SessionUtil.setAttribute(req, "userName", userName);
-				if (userName.equals("admin")) {
-					CookieUtil.addCookie(resp, "role", "admin", 5 * 30);
-					resp.sendRedirect(req.getContextPath() + "/dashboard"); // Redirect to /home
-				} else {
-					CookieUtil.addCookie(resp, "role", "user", 5 * 30);
-					resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
-				}
-			} else {
-				handleLoginFailure(req, resp, loginStatus);
-			}
-		}
-		
-		
+	        if (loginStatus != null && loginStatus) {
+	            SessionUtil.setAttribute(req, "userName", userName);
+	            if (userName.equals("rames")) {
+	                SessionUtil.setAttribute(req, "role", "admin");
+	                CookieUtil.addCookie(resp, "role", "admin", 5 * 30);
+	                resp.sendRedirect(req.getContextPath() + "/dashboard");
+	            } else {
+	                SessionUtil.setAttribute(req, "role", "user");
+	                CookieUtil.addCookie(resp, "role", "user", 5 * 30);
+	                resp.sendRedirect(req.getContextPath() + "/userHome");
+	            }
+	        } else {
+	            handleLoginFailure(req, resp, loginStatus);
+	        }
+	    } else {
+	        handleLoginFailure(req, resp, false); // Handle missing credentials
+	    }
 	}
+
 
 	/**
 	 * Handles login failures by setting attributes and forwarding to the login

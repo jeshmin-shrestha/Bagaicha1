@@ -352,6 +352,14 @@
     </style>
 </head>
 <body>
+<%
+    String role = (String) session.getAttribute("role");
+    if (role == null || !role.equals("admin")) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
     <!-- Header -->
     <jsp:include page="header.jsp" />
     <div class="header-space"></div>
@@ -360,8 +368,7 @@
    
     <div class="welcome-section container">
         <div class="welcome-content">
-            <h1>Welcome Back, Plant Lover!</h1>
-            <p>Let's make your plants thrive!</p>
+<h1>Welcome Back, ${sessionScope.userName}!</h1>            <p>Let's make your plants thrive!</p>
         </div>
         <img src="resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
     </div>

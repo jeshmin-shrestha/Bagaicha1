@@ -188,14 +188,16 @@
 </div>
         
         <nav class="navigation">
-            <a href="#"><span>Home</span></a>
-            <a href="#"><span>Plants</span></a>
-            <a href="#"><span>About Us</span></a>
-            <a href="#"><span>Contact Us</span></a>
-            <a href="#"><img src="resources/images/system/search_icon.png" class="nav-icon" alt="Search"></a>
-            <a href="#"><img src="resources/images/system/user_icon.png" class="nav-icon" alt="Profile"></a>
-            <a href="#"><img src="resources/images/system/logout_icon.png" class="nav-icon" alt="logout"></a>
-             
+            <a href="<c:url value='/userHome' />"><span>Home</span></a>
+    <a href="<c:url value='/plants' />"><span>Plants</span></a>
+   <a href="<c:url value='/aboutUs' />">About Us</a>  <!-- Changed link -->
+    <a href="<c:url value='/contactUs' />">Contact Us</a>  <!-- Changed link -->
+     <a href="<c:url value='/profile' />"><img src="resources/images/system/user_icon.png" class="nav-icon" alt="Profile"></a>
+    
+<a href="${pageContext.request.contextPath}/logout"
+   onclick="return confirm('Do you really want to logout?');">
+    <img src="resources/images/system/logout_icon.png" class="nav-icon" alt="logout">
+</a>
         </nav>
     </header>
     

@@ -436,6 +436,14 @@ body {
     </style>
 </head>
 <body>
+<%
+    String role = (String) session.getAttribute("role");
+    if (role == null || !role.equals("user")) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
     <!-- Include header.jsp -->
     <jsp:include page="header.jsp" />
     
@@ -445,7 +453,7 @@ body {
     <!-- Welcome Section -->
     <div class="welcome-section container">
         <div class="welcome-content">
-            <h1>Welcome Back, Plant Lover!</h1>
+<h1>Welcome Back, ${sessionScope.userName}!</h1>
             <p>Let's make your plants thrive!</p>
         </div>
         <img src="resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
@@ -546,7 +554,8 @@ body {
             </div>
             
             <div class="browse-all">
-                <a href="allPlants.jsp" class="browse-all-btn">Browse All Plants</a>
+               <a href="userProduct"
+ class="browse-all-btn">Browse All Plants</a>
             </div>
         </section>
         

@@ -111,8 +111,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             
             transition: all 0.3s ease;
@@ -124,8 +124,8 @@
         }
         
         .social-icons img {
-            width:80px;
-            height: 80px;
+            width:60px;
+            height: 60px;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
@@ -236,10 +236,10 @@
                 <p><i>🏠</i> Kathmandu, Nepal</p>
                 
                 <div class="social-icons">
-                    <a href="#" aria-label="Email"><img src="resources/images/system/mail_icon.png" alt="Email"></a>
-                    <a href="#" aria-label="Facebook"><img src="resources/images/system/facebook_icon.png" alt="Facebook"></a>
-                    <a href="#" aria-label="Twitter"><img src="resources/images/system/twitter_icon.png" alt="Twitter"></a>
-                    <a href="#" aria-label="YouTube"><img src="resources/images/system/yt_icon.png" alt="YouTube"></a>
+                    <a href="mailto:shresthajeshmin30@gmail.com" aria-label="Email"><img src="resources/images/system/maill_.png" alt="Email"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61558683090680" aria-label="Facebook"><img src="resources/images/system/faceboook.png" alt="Facebook"></a>
+                    <a href="https://www.linkedin.com/in/jeshmin-shrestha/" aria-label="Linkedin"><img src="resources/images/system/linkedin_icon.png" alt="Linkedin"></a>
+                    <a href="https://www.youtube.com/@jeshminshrestha2371" aria-label="YouTube"><img src="resources/images/system/yttt.png" alt="YouTube"></a>
                 </div>
             </div>
 
@@ -248,7 +248,7 @@
                 <p>Subscribe for updates and promotions</p>
                 <form action="subscribe.jsp" method="post" class="subscribe-form">
                     <div class="input-wrapper">
-                        <input type="email" name="email" placeholder="Your email address" required>
+                        <input type="email" name="email" placeholder="jeshmin@gmail.com" required>
                         <button type="submit">Subscribe</button>
                     </div>
                 </form>
