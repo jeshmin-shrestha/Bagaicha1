@@ -73,5 +73,20 @@ public class RegisterService {
 	        return false; // Ensure it returns a boolean
 	    }
 	}
+	public boolean isUsernameTaken(String username) throws SQLException {
+	    if (dbConn == null) {
+	        throw new SQLException("Database connection is not available.");
+	    }
 
+	    String query = "SELECT COUNT(*) FROM user WHERE userName = ?";
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setString(1, username);
+	        try (var rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0; // Returns true if username exists
+	            }
+	        }
+	    }
+	    return false;
+	}
 }

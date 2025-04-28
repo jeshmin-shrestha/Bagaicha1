@@ -133,15 +133,17 @@
     <a href="user_profile.jsp" class="back-btn">&#8592;</a>
     
     <section class="welcome-box">
-        <h2>Hello Jeshmin Shrestha!</h2>
-        <img src="resources/images/system/user_icon.png" alt="User Icon" class="user-icon">
+        <h2>Hello ${user.fullName}!</h2> <!-- Dynamic user name -->
+        <img src="${pageContext.request.contextPath}/resources/images/system/user/${user.image}" 
+             onerror="this.src='${pageContext.request.contextPath}/resources/images/system/user_icon.png'" 
+             class="user-icon">
     </section>
 
     <section class="reset-box">
         <h3>Reset Password</h3>
         <p>Enter the email address you used when you joined.</p>
 
-        <form action="ResetPasswordServlet" method="post">
+<form action="change-password" method="post">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
 

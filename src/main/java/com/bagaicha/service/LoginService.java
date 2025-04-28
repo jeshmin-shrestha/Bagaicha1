@@ -38,6 +38,7 @@ public class LoginService {
  * @return true if the credentials are valid, false otherwise; null if a connection error occurs
  */
 	public Boolean loginUser(UserModel userModel) {
+		
 		if (isConnectionError) {
 			System.out.println("Connection Error!");
 			return null;
@@ -79,4 +80,61 @@ public class LoginService {
 		return dbUsername.equals(userModel.getUserName())
 				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getUserPassword());
 	}
+	
+	public UserModel getUserDetails(String username) {
+	    UserModel user = null;
+	    String query = "SELECT * FROM user WHERE userName = ?";
+	    
+	    try (Connection conn = DbConfig.getDbConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        stmt.setString(1, username);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            user = new UserModel();
+	            user.setUserId(rs.getInt("user_id"));
+	            user.setFullName(rs.getString("fullName"));
+	            user.setUserName(rs.getString("userName"));
+	            user.setUserEmail(rs.getString("userEmail"));
+	            user.setUserPhoneNo(rs.getString("userPhoneNo"));
+	            user.setUserAddress(rs.getString("userAddress"));
+	            user.setImage(rs.getString("image"));
+	            user.setUserRole(rs.getString("userRole"));
+	            // Add all other fields
+	        }
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	    return user;
+	    
+	}
+	/**
+	 * Verifies if the provided password matches the stored password for a given username.
+	 * 
+	 * @param username The username to verify
+	 * @param password The plain-text password to check
+	 * @return true if the password matches, false otherwise
+	 */
+	public boolean verifyPassword(String username, String password) {
+	    if (isConnectionError) {
+	        return false;
+	    }
+
+	    String query = "SELECT userPassword FROM user WHERE userName = ?";
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setString(1, username);
+	        ResultSet result = stmt.executeQuery();
+
+	        if (result.next()) {
+	            String encryptedPassword = result.getString("userPassword");
+	            String decryptedPassword = PasswordUtil.decrypt(encryptedPassword, username);
+	            return decryptedPassword != null && decryptedPassword.equals(password);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
 }

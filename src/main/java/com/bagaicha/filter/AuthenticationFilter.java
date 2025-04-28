@@ -30,6 +30,7 @@ public class AuthenticationFilter implements Filter {
 	private static final String PRODUCT_LIST = "/productList";
 	private static final String PRODUCT_EDIT = "/productEdit";
 	private static final String USER_HOME = "/userHome";
+	private static final String RESET_PASSWORD = "/change-password";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -67,7 +68,7 @@ public class AuthenticationFilter implements Filter {
 			// Admin is logged in
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + DASHBOARD);
-			} else if (uri.endsWith(DASHBOARD) || uri.endsWith(USER_UPDATE)|| uri.endsWith(PROFILE)|| uri.endsWith(USER_UPDATE)
+			} else if (uri.endsWith(DASHBOARD) || uri.endsWith(USER_UPDATE)|| uri.endsWith(PROFILE)|| uri.endsWith(USER_UPDATE)|| uri.endsWith(RESET_PASSWORD)
 					|| uri.endsWith(ADMIN_PRODUCT) || uri.endsWith(PRODUCT_EDIT)
 					|| uri.endsWith(ABOUT)  || uri.endsWith(ROOT)|| uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(CONTACT)) {
 				chain.doFilter(request, response);
@@ -80,7 +81,7 @@ public class AuthenticationFilter implements Filter {
 			// User is logged in
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + USER_HOME);
-			} else if (uri.endsWith(USER_HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PROFILE)
+			} else if (uri.endsWith(USER_HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PROFILE)|| uri.endsWith(RESET_PASSWORD)
 					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT_LIST) ) {
 				chain.doFilter(request, response);
 			} else if (uri.endsWith(DASHBOARD)  || uri.endsWith(USER_UPDATE))

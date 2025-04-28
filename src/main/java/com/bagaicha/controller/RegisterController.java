@@ -3,6 +3,7 @@ package com.bagaicha.controller;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.bagaicha.model.UserModel;
 
@@ -97,6 +98,7 @@ public class RegisterController extends HttpServlet {
 
 
 			UserModel userModel = extractUserModel(req);
+			
 
 			Boolean isAdded = registerService.addUser(userModel);
 
@@ -170,6 +172,13 @@ public class RegisterController extends HttpServlet {
         if (ValidationUtil.isNullOrEmpty(fullName)) return "fullName is required.";
 
         if (ValidationUtil.isNullOrEmpty(username)) return "Username is required.";
+        try {
+            if (registerService.isUsernameTaken(username)) {
+                return "Username is already taken.";
+            }
+        } catch (SQLException e) {
+            return "Error checking username availability.";
+        }
 
         if (ValidationUtil.isNullOrEmpty(email)) return "Email is required.";
 
@@ -247,10 +256,11 @@ public class RegisterController extends HttpServlet {
 	    String userPhoneNo = req.getParameter("userPhoneNo");
 	    String userPassword = req.getParameter("userPassword");
 	    String userAddress = req.getParameter("userAddress");
-
+	    Part imagePart = req.getPart("image");
 	    // Encrypt password
 	    userPassword = PasswordUtil.encrypt(userName, userPassword);
-
+	 // Extract image filename
+	    String imageName = imageUtil.getImageNameFromPart(imagePart);
 	    UserModel user = new UserModel();
 	
 	    user.setFullName(fullName);
@@ -261,7 +271,7 @@ public class RegisterController extends HttpServlet {
 	    user.setUserRole("customer"); // default role, can be changed later as needed
 	    user.setUserAddress(userAddress);
 	    user.setLastLogin(null); // to be set at login time
-
+	    user.setImage(imageName); // Set the image filename
 	    return user;
 	    
 	   

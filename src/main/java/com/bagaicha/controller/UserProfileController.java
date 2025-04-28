@@ -3,6 +3,7 @@ package com.bagaicha.controller;
 import java.io.IOException;
 
 import com.bagaicha.model.UserModel;
+import com.bagaicha.service.LoginService;
 import com.bagaicha.service.UserProfileService;
 
 import jakarta.servlet.ServletException;
@@ -28,9 +29,27 @@ public class UserProfileController extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("WEB-INF/pages/user_profile.jsp").forward(request, response);
-    }
+        HttpSession session = request.getSession();
+        UserModel user = (UserModel) session.getAttribute("user"); // Get full user object
+        
+        if (user == null) {
+            // If user not in session, try to get from DB using username
+            String username = (String) session.getAttribute("userName");
+            if (username != null) {
+                LoginService loginService = new LoginService();
+                user = loginService.getUserDetails(username);
+            }
+        }
 
+        if (user != null) {
+            request.setAttribute("user", user); // Make available to JSP
+            System.out.println("DEBUG - User data: " + user); // Log for debugging
+        } else {
+            request.setAttribute("error", "No user logged in!");
+        }
+        
+        request.getRequestDispatcher("/WEB-INF/pages/user_profile.jsp").forward(request, response);
+    }
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
