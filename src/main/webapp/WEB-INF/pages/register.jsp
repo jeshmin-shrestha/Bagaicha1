@@ -70,9 +70,10 @@
                     <div class="form-group half-width">
                         <label for="register-phone">Phone Number</label>
                         <input type="tel" id="register-phone" name="userPhoneNo" value="${param.userPhoneNo}" required>
-                        <c:if test="${not empty errors.userPhoneError}">
-                            <span class="error">${errors.userPhoneError}</span>
-                        </c:if>
+                        <span class="error" id="register-phone-error"></span>
+    <c:if test="${not empty errors.userPhoneError}">
+        <span class="error">${errors.userPhoneError}</span>
+    </c:if>
                     </div>
 
                     <div class="form-group half-width">
@@ -165,16 +166,7 @@
             }
         });
 
-        function displayError(fieldId, message) {
-            let errorElement = document.querySelector(`#${fieldId}-error`);
-            if (!errorElement) {
-                errorElement = document.createElement('span');
-                errorElement.className = 'error';
-                errorElement.id = `${fieldId}-error`;
-                document.getElementById(fieldId).parentNode.appendChild(errorElement);
-            }
-            errorElement.textContent = message;
-        }
+        
     </script>
 </body>
 </html>

@@ -2,6 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="jakarta.servlet.http.HttpSession"%>
 <%@ page import="jakarta.servlet.http.HttpServletRequest"%><!DOCTYPE html>
+<%
+    String role = null;
+    if (request.getCookies() != null) {
+        for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
+            if ("role".equals(cookie.getName())) {
+                role = cookie.getValue();
+                break;
+            }
+        }
+    }
+%><%
+    request.setAttribute("role", role);
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -188,11 +201,21 @@
 </div>
         
         <nav class="navigation">
-            <a href="<c:url value='/userHome' />"><span>Home</span></a>
-    <a href="<c:url value='/plants' />"><span>Plants</span></a>
-   <a href="<c:url value='/aboutUs' />">About Us</a>  <!-- Changed link -->
-    <a href="<c:url value='/contactUs' />">Contact Us</a>  <!-- Changed link -->
-     <a href="<c:url value='/profile' />"><img src="resources/images/system/user_icon.png" class="nav-icon" alt="Profile"></a>
+   <a href="/Bagaicha/home">Home</a>
+<c:choose>
+    <c:when test="${role == 'admin'}">
+        <a href="${pageContext.request.contextPath}/adminProduct">Plant</a>
+    </c:when>
+    <c:when test="${role == 'user'}">
+        <a href="${pageContext.request.contextPath}/productList">Plant</a>
+    </c:when>
+    <c:otherwise>
+        <a href="${pageContext.request.contextPath}/home">Plant</a>
+    </c:otherwise>
+</c:choose><a href="/Bagaicha/about">About Us</a>
+  <!-- Changed link -->
+<a href="/Bagaicha/contact">Contact Us</a>
+<a href="${pageContext.request.contextPath}/profile"><img src="resources/images/system/user_icon.png" class="nav-icon" alt="Profile"></a>
     
 <a href="${pageContext.request.contextPath}/logout"
    onclick="return confirm('Do you really want to logout?');">

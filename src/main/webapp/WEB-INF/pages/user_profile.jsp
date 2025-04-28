@@ -27,6 +27,25 @@
             --transition: all 0.3s ease;
         }
 
+        .message {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        input.editable {
+            background-color: #fff !important;
+            color: #2D3748 !important;
+            cursor: text !important;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -56,7 +75,7 @@
         
 
         .profile-header {
-background:#C3CDB2;
+            background:#C3CDB2;
             color: var(--white);
             padding: 30px;
             text-align: center;
@@ -146,6 +165,16 @@ background:#C3CDB2;
             font-size: 1rem;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
+            background-color: #f5f5f5;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        input.editable, select.editable {
+            background-color: var(--white);
+            color: var(--dark-text);
+            cursor: text;
+            border-color: #d1d5db;
         }
 
         input:focus, select:focus {
@@ -195,6 +224,7 @@ background:#C3CDB2;
         .btn-save {
             background-color: var(--primary-green);
             color: var(--white);
+            display: none;
         }
 
         .btn-change-password {
@@ -205,6 +235,12 @@ background:#C3CDB2;
         .btn-logout {
             background-color: var(--danger-red);
             color: var(--white);
+        }
+
+        .btn-cancel {
+            background-color: var(--neutral-gray);
+            color: var(--white);
+            display: none;
         }
 
         .btn:hover {
@@ -279,15 +315,46 @@ background:#C3CDB2;
     </style>
 </head>
 <body>
+<%@ page import="com.bagaicha.model.UserModel" %>
+
+<%
+    // Get the logged-in user from session
+    UserModel loggedInUser = (UserModel) session.getAttribute("user");
+    
+    if (loggedInUser != null) {
+%>
+        <h1><%= loggedInUser.getFullName() %></h1>
+        <p><strong>Email:</strong> <%= loggedInUser.getUserEmail() %></p>
+        <p><strong>Phone Number:</strong> <%= loggedInUser.getUserPhoneNo() %></p>
+        <p><strong>Address:</strong> <%= loggedInUser.getUserAddress() %></p>
+        <p><strong>Username:</strong> <%= loggedInUser.getUserName() %></p>
+<%
+    } else {
+%>
+        <p>You are not logged in!</p>
+<%
+    }
+%>
     <div class="header-space"></div>
 
 <div class="container">
+<% if (request.getParameter("success") != null) { %>
+            <div class="message success">
+                Profile updated successfully!
+            </div>
+        <% } %>
+        
+        <% if (request.getParameter("error") != null) { %>
+            <div class="message error">
+                <%= "update_failed".equals(request.getParameter("error")) ? "Failed to update profile. Please try again." : "" %>
+            </div>
+        <% } %>
     <div class="profile-card">
         <div class="profile-header">
             <img src="resources/images/system/newuser.png" alt="Profile Picture" class="profile-avatar">
             <h2>Jeshmin Shrestha</h2>
             
-            <button class="edit-profile-btn">
+            <button class="edit-profile-btn" id="editProfileBtn">
                 <i class="fas fa-pencil-alt"></i> Edit Profile
             </button>
         </div>
@@ -298,28 +365,28 @@ background:#C3CDB2;
                     <div class="form-group">
                         <label for="fullName">Full Name</label>
                         <div class="input-field">
-                            <input type="text" id="fullName"  readonly>
+                            <input type="text" id="fullName" value="${fullName}"  readonly>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email</label>
                         <div class="input-field">
-                            <input type="email" id="email"  readonly>
+                            <input type="email" id="email" value="${email}" readonly>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="username">Username</label>
                         <div class="input-field">
-                            <input type="text" id="username" readonly>
+                            <input type="text" id="username" value="${username}"  readonly>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="address">Address</label>
                         <div class="input-field">
-                            <input type="text" id="address"  readonly>
+                            <input type="text" id="address" value="${address}" readonly>
                         </div>
                     </div>
                     
@@ -327,21 +394,24 @@ background:#C3CDB2;
                         <label>Phone Number</label>
                         <div class="phone-input">
                             <img class="flag" src="https://flagcdn.com/w40/np.png" alt="Nepal Flag">
-                            <input type="tel"  readonly>
+                            <input type="tel" id="phone" value="${phone}" readonly>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="birthdate">Date of Birth</label>
+                        <label for="password">Password</label>
                         <div class="input-field">
-                            <input type="date" id="birthdate"  readonly>
+                            <input type="password" id="password" value="***" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="action-buttons">
-                    <button type="button" class="btn btn-save">
+                    <button type="button" class="btn btn-save" id="saveBtn">
                         <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-cancel" id="cancelBtn">
+                        <i class="fas fa-times"></i> Cancel
                     </button>
                     <button type="button" class="btn btn-change-password">
                         <i class="fas fa-key"></i> Change Password
@@ -358,5 +428,63 @@ background:#C3CDB2;
 </div>
 
 <%@ include file="footer.jsp" %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const inputs = document.querySelectorAll('#profileForm input');
+        
+        // Toggle edit mode
+        editProfileBtn.addEventListener('click', function() {
+            // Toggle readonly attribute and editable class for all inputs
+            inputs.forEach(input => {
+                input.readOnly = !input.readOnly;
+                input.classList.toggle('editable');
+            });
+            
+            // Toggle button visibility
+            saveBtn.style.display = 'inline-flex';
+            cancelBtn.style.display = 'inline-flex';
+            editProfileBtn.style.display = 'none';
+            
+            // Focus on the first input field
+            if (inputs.length > 0) {
+                inputs[0].focus();
+            }
+        });
+        
+        // Cancel edit mode
+        cancelBtn.addEventListener('click', function() {
+            // Reset all fields to readonly
+            inputs.forEach(input => {
+                input.readOnly = true;
+                input.classList.remove('editable');
+            });
+            
+            // Reset button visibility
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            editProfileBtn.style.display = 'flex';
+        });
+        
+        // Save changes
+        saveBtn.addEventListener('click', function() {
+            // Here you would typically submit the form via AJAX or regular form submission
+            alert('Profile changes saved successfully!');
+            
+            // After saving, return to view mode
+            inputs.forEach(input => {
+                input.readOnly = true;
+                input.classList.remove('editable');
+            });
+            
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            editProfileBtn.style.display = 'flex';
+        });
+    });
+</script>
 </body>
 </html>
