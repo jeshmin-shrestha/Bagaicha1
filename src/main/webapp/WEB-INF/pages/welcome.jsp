@@ -4,99 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Bagaicha</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        
-        .welcome-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 40px 0;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        
-        .tagline {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-        
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin: 30px 0;
-        }
-        
-        .feature-box {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 15px;
-            width: 250px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .feature-box:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 3em;
-            color: #4CAF50;
-            margin-bottom: 15px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            margin: 20px 0;
-            transition: background-color 0.3s;
-        }
-        
-        .cta-button:hover {
-            background-color: #45a049;
-        }
-        
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            border-radius: 0 0 8px 8px;
-        }
-        
-        @media (max-width: 768px) {
-            .feature-box {
-                width: 100%;
-                margin: 15px 0;
-            }
-        }
-    </style>
+   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/welcome.css" />
 </head>
 <body>
     <div class="welcome-container">
@@ -126,8 +34,8 @@
             
             <div class="feature-box">
                 <div class="feature-icon">☕</div>
-                <h3>Garden Café</h3>
-                <p>Relax in our café surrounded by greenery and enjoy fresh, garden-to-table meals.</p>
+                <h3>Garden </h3>
+                <p>Relax in our community surrounded by greenery and enjoy fresh, garden-to-table meals.</p>
             </div>
         </div>
         
@@ -135,7 +43,7 @@
         
         <footer>
             <p>© 2023 Bagaicha. All rights reserved.</p>
-            <p>Contact us: info@bagaicha.com | +123 456 7890</p>
+            <p>Contact us: info@bagaicha.com |9861786228</p>
         </footer>
     </div>
 </body>

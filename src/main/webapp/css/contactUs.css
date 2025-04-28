@@ -24,7 +24,7 @@
             padding: 80px 20px 40px;
             position: relative;
             overflow: hidden;
-            background:url('resources/images/system/contactus.png');
+            background:url('../resources/images/system/contactus.png');
             height:950px;
         }
 
