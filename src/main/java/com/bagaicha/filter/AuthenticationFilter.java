@@ -30,7 +30,7 @@ public class AuthenticationFilter implements Filter {
 	private static final String PRODUCT_LIST = "/productList";
 	private static final String PRODUCT_EDIT = "/productEdit";
 	private static final String USER_HOME = "/userHome";
-	private static final String RESET_PASSWORD = "/change-password";
+	private static final String RESET_PASSWORD = "/passwordReset";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

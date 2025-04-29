@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserProfileService {
+public class PasswordResetService {
 
     private static final String UPDATE_USER_SQL = "UPDATE user SET full_name = ?, username = ?, phone = ? WHERE email = ?";
 

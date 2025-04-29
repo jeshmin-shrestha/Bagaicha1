@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.bagaicha.model.UserModel;
 import com.bagaicha.service.LoginService;
-import com.bagaicha.service.UserProfileService;
+import com.bagaicha.service.PasswordResetService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,7 +69,7 @@ public class UserProfileController extends HttpServlet {
         updatedUser.setUserEmail(currentUser.getUserEmail()); // assuming email is unique identifier
         updatedUser.setUserPassword(currentUser.getUserPassword()); // reuse password
 
-        UserProfileService userService = new UserProfileService(); // Renamed to UserService for clarity
+        PasswordResetService userService = new PasswordResetService(); // Renamed to UserService for clarity
         boolean success = userService.updateUser(updatedUser);
 
         if (success) {

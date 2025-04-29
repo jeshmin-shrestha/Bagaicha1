@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,18 @@
     
 </head>
 <body>
+<% if (request.getAttribute("error") != null) { %>
+    <div class="alert alert-danger">
+        <%= request.getAttribute("error") %>
+    </div>
+<% } %>
 
+<% if (session.getAttribute("success") != null) { %>
+    <div class="alert alert-success">
+        <%= session.getAttribute("success") %>
+    </div>
+    <% session.removeAttribute("success"); %>
+<% } %>
 <main class="reset-container">
     <a href="user_profile.jsp" class="back-btn">&#8592;</a>
     
@@ -27,15 +39,17 @@
         <h3>Reset Password</h3>
         <p>Enter the email address you used when you joined.</p>
 
-<form action="change-password" method="post">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+<form action="${pageContext.request.contextPath}/passwordReset" method="post">
 
+            <label for="email">Email</label>
+                <input type="email" name="userEmail" required>
+            
             <label for="currentPassword">Current Password</label>
-            <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter your current password" required>
+    <input type="password" name="currentPassword" required>
 
             <label for="newPassword">New Password</label>
-            <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password" required>
+                <input type="password" name="newPassword" required>
+
 
             <button type="submit">Reset Password</button>
         </form>
