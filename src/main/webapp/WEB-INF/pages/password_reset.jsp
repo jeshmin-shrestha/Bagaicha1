@@ -41,8 +41,8 @@
 
 <form action="${pageContext.request.contextPath}/passwordReset" method="post">
 
-            <label for="email">Email</label>
-                <input type="email" name="userEmail" required>
+            <label for="username">Username</label>
+                <input type="text" name="userName" required>
             
             <label for="currentPassword">Current Password</label>
     <input type="password" name="currentPassword" required>

@@ -31,6 +31,12 @@ public class UpdateProfileService {
 			ex.printStackTrace();
 			isConnectionError = true;
 		}
+		if (dbConn != null) {
+			System.out.println("Database connection successful!");
+		} else {
+			System.out.println("Failed to connect to database!");
+		}
+
 	}
 
 	/**
@@ -41,37 +47,47 @@ public class UpdateProfileService {
 	 *         if there is a connection error or an exception occurs.
 	 */
 	public Boolean updateUserInfo(UserModel user) {
-	    if (isConnectionError) {
-	        return null;
-	    }
+		System.out.println("\n===== UPDATE PROFILE SERVICE START =====");
+		System.out.println("Attempting to update user ID: " + user.getUserId());
 
-	    // Check if the user exists in the database
-	    int userId = user.getUserId();
-	    if (userId == 0) {
-	        System.out.println("Invalid user ID: " + userId);
-	        return false;
-	    }
+		if (isConnectionError) {
+			System.out.println("ERROR: Database connection error");
+			return false;
+		}
 
-	    // Update user information query
-	    String updateSQL = "UPDATE users SET full_name = ?, email = ?, phone_number = ?, user_address = ?, image = ? WHERE user_id = ?";
+		// Change the SQL query to match your exact column names
+		String updateSQL = "UPDATE user SET fullName = ?, userName = ?, userEmail = ?, "
+				+ "userPhoneNo = ?, userAddress = ? WHERE user_id = ?";
+		System.out.println("Prepared SQL: " + updateSQL);
+		System.out.println("Parameters:");
+		System.out.println("1. fullName: " + user.getFullName());
+		System.out.println("2. userName: " + user.getUserName());
+		System.out.println("3. userEmail: " + user.getUserEmail());
+		System.out.println("4. userPhoneNo: " + user.getUserPhoneNo());
+		System.out.println("5. userAddress: " + user.getUserAddress());
+		System.out.println("6. user_id: " + user.getUserId());
 
-	    try (PreparedStatement preparedStatement = dbConn.prepareStatement(updateSQL)) {
-	        // Set the parameters for the prepared statement
-	        preparedStatement.setString(1, user.getFullName());
-	        preparedStatement.setString(2, user.getUserEmail());
-	        preparedStatement.setString(3, user.getUserPhoneNo());
-	        preparedStatement.setString(4, user.getUserAddress());
-	        preparedStatement.setString(5, user.getImage());  // Update image field (if necessary)
-	        preparedStatement.setInt(6, user.getUserId());    // Ensure the correct user ID is set
+		try (PreparedStatement preparedStatement = dbConn.prepareStatement(updateSQL)) {
+			preparedStatement.setString(1, user.getFullName());
+			preparedStatement.setString(2, user.getUserName());
+			preparedStatement.setString(3, user.getUserEmail());
+			preparedStatement.setString(4, user.getUserPhoneNo());
+			preparedStatement.setString(5, user.getUserAddress());
+			preparedStatement.setInt(6, user.getUserId());
 
-	        // Execute the update query
-	        int rowsAffected = preparedStatement.executeUpdate();
-	        return rowsAffected > 0;  // Returns true if the update is successful
-	    } catch (SQLException e) {
-	        // Log and handle SQL exceptions
-	        e.printStackTrace();
-	        return null;
-	    }
+			System.out.println("Executing update...");
+			int rowsAffected = preparedStatement.executeUpdate();
+			System.out.println("Rows affected: " + rowsAffected);
+
+			boolean success = rowsAffected > 0;
+			System.out.println(success ? "SUCCESS: User updated" : "WARNING: No rows affected");
+			System.out.println("===== UPDATE PROFILE SERVICE END =====\n");
+			return success;
+		} catch (SQLException e) {
+			System.out.println("SQL ERROR:");
+			e.printStackTrace();
+			System.out.println("===== UPDATE PROFILE SERVICE END =====\n");
+			return false;
+		}
 	}
-
 }

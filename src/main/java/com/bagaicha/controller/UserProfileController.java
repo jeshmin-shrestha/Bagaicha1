@@ -19,21 +19,14 @@ public class UserProfileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserProfileController() {
-        super();
-    }
-
-    /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
+    // Update the doGet method to handle both success parameters
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        UserModel user = (UserModel) session.getAttribute("user"); // Get full user object
+        UserModel user = (UserModel) session.getAttribute("user");
         
         if (user == null) {
-            // If user not in session, try to get from DB using username
             String username = (String) session.getAttribute("userName");
             if (username != null) {
                 LoginService loginService = new LoginService();
@@ -41,15 +34,24 @@ public class UserProfileController extends HttpServlet {
             }
         }
 
+        // Handle success/error messages
+        if (request.getParameter("success") != null || request.getParameter("updated") != null) {
+            request.setAttribute("success", "Profile updated successfully!");
+        }
+        if (request.getParameter("error") != null) {
+            request.setAttribute("error", "Failed to update profile");
+        }
+
         if (user != null) {
-            request.setAttribute("user", user); // Make available to JSP
-            System.out.println("DEBUG - User data: " + user); // Log for debugging
+            request.setAttribute("user", user);
+            System.out.println("DEBUG - User data: " + user);
         } else {
             request.setAttribute("error", "No user logged in!");
         }
         
         request.getRequestDispatcher("/WEB-INF/pages/user_profile.jsp").forward(request, response);
     }
+    
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
@@ -79,5 +81,12 @@ public class UserProfileController extends HttpServlet {
             request.setAttribute("error", "Failed to update profile.");
             request.getRequestDispatcher("WEB-INF/pages/user_profile.jsp").forward(request, response); // Forward to the correct page
         }
+        
+        System.out.println("Received update request:");
+        System.out.println("Full Name: " + request.getParameter("fullName"));
+        System.out.println("Username: " + request.getParameter("username"));
+        System.out.println("Email: " + request.getParameter("email"));
+        System.out.println("Phone: " + request.getParameter("phone"));
+        System.out.println("Address: " + request.getParameter("address"));
     }
 }

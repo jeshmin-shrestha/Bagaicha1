@@ -1,6 +1,7 @@
 package com.bagaicha.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import com.bagaicha.model.UserModel;
 import com.bagaicha.service.UpdateProfileService;
@@ -10,41 +11,54 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 @WebServlet("/userUpdate")
 public class UpdateUserProfileController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        // Retrieve updated user data from the request
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
+		System.out.println("\n===== UPDATE PROFILE CONTROLLER START =====");
+		System.out.println("Request parameters received:");
+		Enumeration<String> params = request.getParameterNames();
+		while (params.hasMoreElements()) {
+			String param = params.nextElement();
+			System.out.println(param + ": " + request.getParameter(param));
+		}
 
-        // Assume logged-in user is available in session
-        UserModel loggedInUser = (UserModel) request.getSession().getAttribute("loggedInUser");
+	
 
-        // Update the user model with new values
-        loggedInUser.setFullName(fullName);
-        loggedInUser.setUserEmail(email);
-        loggedInUser.setUserName(username);
-        loggedInUser.setUserAddress(address);
-        loggedInUser.setUserPhoneNo(phone);
 
-        // Call the service to update user profile
-        UpdateProfileService userProfileService = new UpdateProfileService();
-        boolean success = userProfileService.updateUserInfo(loggedInUser);
+		int userId = Integer.parseInt(request.getParameter("userId"));
 
-        // Redirect to profile page with success/failure feedback
-        if (success) {
-            response.sendRedirect("profile?success=true");
-        } else {
-            response.sendRedirect("profile?success=false");
-        }
-    }
+		UserModel updatedUser = new UserModel();
+		updatedUser.setUserId(userId); // from form, not session
+		updatedUser.setFullName(request.getParameter("fullName"));
+		updatedUser.setUserName(request.getParameter("username"));
+		updatedUser.setUserEmail(request.getParameter("email"));
+		updatedUser.setUserPhoneNo(request.getParameter("phone"));
+		updatedUser.setUserAddress(request.getParameter("address"));
+		
+
+		System.out.println("\nUpdated user object:");
+		System.out.println(updatedUser); // Make sure UserModel has toString()
+
+		// Update in database
+		UpdateProfileService userProfileService = new UpdateProfileService();
+		boolean success = userProfileService.updateUserInfo(updatedUser);
+
+		// Add this after successful update to ensure session is properly updated
+		if (success) {
+			System.out.println("SUCCESS: User updated in database");
+			// Refresh all user data from database to ensure consistency
+			response.sendRedirect("profile?success=true");
+
+		} else {
+			System.out.println("ERROR: Failed to update user in database");
+			response.sendRedirect("profile?error=update_failed");
+		}
+		System.out.println("===== UPDATE PROFILE CONTROLLER END =====\n");
+	}
 }

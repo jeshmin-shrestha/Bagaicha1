@@ -82,9 +82,9 @@ public class AuthenticationFilter implements Filter {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + USER_HOME);
 			} else if (uri.endsWith(USER_HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PROFILE)|| uri.endsWith(RESET_PASSWORD)
-					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT_LIST) ) {
+					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT_LIST)|| uri.endsWith(USER_UPDATE) ) {
 				chain.doFilter(request, response);
-			} else if (uri.endsWith(DASHBOARD)  || uri.endsWith(USER_UPDATE))
+			} else if (uri.endsWith(DASHBOARD) )
 					 {
 				res.sendRedirect(req.getContextPath() + USER_HOME);
 			} else {
