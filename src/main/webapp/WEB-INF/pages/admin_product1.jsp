@@ -51,16 +51,16 @@
                     <tr>
                         <th>Plant Name</th>
                         <th>Category</th>
-                        <th>Last Watered</th>
+                        <th>Scientific Name</th>
                         <th>Actions</th>
                       
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Rose (Rosa spp.)</td>
+                        <td>Rose </td>
                         <td>Seasonal Flower</td>
-                        <td>2 days ago</td>
+                        <td>Rosa</td>
                         <td>
                             <div class="action-icons">
                                 <button class="action-icon view" title="View">
@@ -76,9 +76,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Snake Plant (Sansevieria)</td>
+                        <td>Snake Plant </td>
                         <td>Indoor Plant</td>
-                        <td>1 week ago</td>
+                        <td>Sansevieria</td>
                         <td>
                             <div class="action-icons">
                                 <button class="action-icon view" title="View">
@@ -94,9 +94,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Basil (Ocimum basilicum)</td>
+                        <td>Basil</td>
                         <td>Herb</td>
-                        <td>Yesterday</td>
+                        <td>Ocimum basilicum</td>
                         <td>
                             <div class="action-icons">
                                 <button class="action-icon view" title="View">

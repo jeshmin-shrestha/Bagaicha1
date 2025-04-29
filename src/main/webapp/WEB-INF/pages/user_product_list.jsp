@@ -121,9 +121,9 @@
                 
                 <!-- Plant Card 4 -->
                 <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
+                    <img src="resources/images/system/jasmine.jpg" alt="Pothos" class="plant-image">
                     <div class="plant-info">
-                        <h3>Aloe Vera</h3>
+                        <h3>Jasmine</h3>
                         <div class="plant-meta">
                            
                         </div>
@@ -132,9 +132,9 @@
                 </div>
                  <!-- Plant Card 5 -->
                 <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
+                    <img src="resources/images/system/lotus.jpg" alt="Pothos" class="plant-image">
                     <div class="plant-info">
-                        <h3>Aloe Vera</h3>
+                        <h3>Lotus</h3>
                         <div class="plant-meta">
                            
                         </div>
@@ -142,9 +142,9 @@
                     </div>
                 </div> <!-- Plant Card 6 -->
                 <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
+                    <img src="resources/images/system/Tulip.jpg" alt="Pothos" class="plant-image">
                     <div class="plant-info">
-                        <h3>Aloe Vera</h3>
+                        <h3>Tulip</h3>
                         <div class="plant-meta">
                            
                         </div>
@@ -152,9 +152,9 @@
                     </div>
                 </div> <!-- Plant Card 7 -->
                 <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
+                    <img src="resources/images/system/carnation.jpg" alt="Pothos" class="plant-image">
                     <div class="plant-info">
-                        <h3>Aloe Vera</h3>
+                        <h3>Carnation</h3>
                         <div class="plant-meta">
                            
                         </div>
@@ -172,9 +172,9 @@
                     </div>
                 </div> <!-- Plant Card 9 -->
                 <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
+                    <img src="resources/images/system/snakeplant.jpg" alt="Pothos" class="plant-image">
                     <div class="plant-info">
-                        <h3>Aloe Vera</h3>
+                        <h3>Snake Plant</h3>
                         <div class="plant-meta">
                            
                         </div>

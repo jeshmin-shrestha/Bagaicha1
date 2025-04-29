@@ -31,6 +31,7 @@ public class AuthenticationFilter implements Filter {
 	private static final String PRODUCT_EDIT = "/productEdit";
 	private static final String USER_HOME = "/userHome";
 	private static final String RESET_PASSWORD = "/passwordReset";
+	private static final String USER_VIEW_PRODUCT = "/productView";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -82,7 +83,7 @@ public class AuthenticationFilter implements Filter {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + USER_HOME);
 			} else if (uri.endsWith(USER_HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PROFILE)|| uri.endsWith(RESET_PASSWORD)
-					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT_LIST)|| uri.endsWith(USER_UPDATE) ) {
+					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT_LIST)|| uri.endsWith(USER_UPDATE) || uri.endsWith(USER_VIEW_PRODUCT)) {
 				chain.doFilter(request, response);
 			} else if (uri.endsWith(DASHBOARD) )
 					 {

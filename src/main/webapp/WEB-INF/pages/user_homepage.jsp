@@ -123,13 +123,13 @@
                         <div class="plant-meta">
                            
                         </div>
-                        <button class="see-more-btn">View Details</button>
+                       <button class="see-more-btn" onclick="location.href='${pageContext.request.contextPath}/productView';">View Details</button>
                     </div>
                 </div>
             </div>
             
             <div class="browse-all">
-               <a href="userProduct"
+               <a href="${pageContext.request.contextPath}/productList"
  class="browse-all-btn">Browse All Plants</a>
             </div>
         </section>
