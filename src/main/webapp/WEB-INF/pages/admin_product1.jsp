@@ -95,7 +95,10 @@
     <td><%= plant.getCategoryId() %></td>
     <td>
         <div class="action-icons">
-            <button class="action-icon view" title="View"><i class="fas fa-eye"></i></button>
+<button class="action-icon view" title="View" 
+        onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
+    <i class="fas fa-eye"></i>
+</button>
             <button class="action-icon edit" title="Edit"><i class="fas fa-edit"></i></button>
             <button class="action-icon delete" title="Delete"><i class="fas fa-trash-alt"></i></button>
         </div>
@@ -111,9 +114,7 @@
     </div>
 
     <script>
-        function showPlantDetails(plantId) {
-            window.location.href = 'plantDetails?plantId=' + plantId;
-        }
+       
         
         function editPlant(plantId) {
             window.location.href = 'editPlant?plantId=' + plantId;
@@ -123,6 +124,9 @@
             if (confirm('Are you sure you want to delete this plant?')) {
                 window.location.href = 'deletePlant?plantId=' + plantId;
             }
+        }
+        function showPlantDetails(plantId) {
+            window.location.href = 'productEdit';
         }
     </script>
 
