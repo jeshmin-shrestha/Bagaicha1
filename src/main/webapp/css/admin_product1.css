@@ -29,8 +29,8 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1600px;
+            margin: 20px auto;
             padding: 0 20px;
         }
 
@@ -41,7 +41,7 @@
             border-radius: 20px;
             padding: 40px;
             margin: 30px auto;
-            max-width: 1200px;
+            max-width: 1600px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(44, 110, 73, 0.2);
@@ -86,14 +86,17 @@
             100% { transform: translateX(0) rotate(0deg); }
         }
         
-
+.header-space {
+            height: 50px;
+        }
         /* Plant Table Section */
         .plant-section {
-            background-color:#C3CDB2;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin: 2rem auto;
-            box-shadow: var(--card-shadow);
+           background-color: #C3CDB2;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin: 2rem auto;
+    box-shadow: var(--card-shadow);
+    overflow-x: auto; 
         }
 
         .section-header {
@@ -214,9 +217,14 @@
 }
         /* Table Styles */
         .plant-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+             width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1.5rem;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .plant-table thead {

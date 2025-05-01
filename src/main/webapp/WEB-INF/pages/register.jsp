@@ -20,13 +20,13 @@
                 <%-- Error/Success Messages --%>
                 <% String error = (String) request.getAttribute("error"); %>
                 <% if (error != null) { %>
-                    <div class="error-message" style="color: red; margin-bottom: 10px;">
+                    <div class="error-message" >
                         <%= error %>
                     </div>
                 <% } %>
                 <% String success = (String) session.getAttribute("success"); %>
                 <% if (success != null) { %>
-                    <div class="success-message" style="color: green; margin-bottom: 10px;">
+                    <div class="success-message" >
                         <%= success %>
                         <% session.removeAttribute("success"); %>
                     </div>
