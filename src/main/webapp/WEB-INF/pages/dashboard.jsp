@@ -45,9 +45,9 @@
                         <img src="resources/images/system/plants4.png" alt="Plants Icon">
                     </div>
                     <div class="stat-content">
-                        <h3>Total Plants</h3>
-                        <div class="value">1,248</div>
-                    </div>
+    <h3>Total Plants</h3>
+    <div class="value">${totalPlants}</div>
+</div>
                 </div>
                 
                 <!-- Total Users -->
@@ -56,9 +56,9 @@
                         <img src="resources/images/system/newusers2.png" alt="Users Icon">
                     </div>
                     <div class="stat-content">
-                        <h3>Total Users</h3>
-                        <div class="value">856</div>
-                    </div>
+    <h3>Total Users</h3>
+    <div class="value">${totalUsers}</div>
+</div>
                 </div>
                 
                 
@@ -69,9 +69,10 @@
                         <img src="resources/images/system/categoryplantss.png" alt="Categories Icon">
                     </div>
                     <div class="stat-content">
-                        <h3>Plant Categories</h3>
-                        <div class="value">24</div>
-                    </div>
+    <h3>Plant Categories</h3>
+    <div class="value">${totalCategories}</div>
+</div>
+
                 </div>
             </div>
         </section>
@@ -84,26 +85,18 @@
                 <div class="recent-card">
                     <h3>New Plants Added</h3>
                     <ul class="recent-list">
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Rose</h4>
-                                
-                            </div>
-                        </li>
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Peace Lily</h4>
-                               
-                            </div>
-                        </li>
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Marigold</h4>
-                            
-                            </div>
-                            
-                        </li>
-                    </ul>
+    <c:forEach var="plant" items="${recentPlants}">
+    <c:if test="${empty recentPlants}">
+    <p>No recent plants found.</p>
+</c:if>
+    
+        <li class="recent-item">
+            <div class="recent-item-info">
+                <h4>${plant}</h4>
+            </div>
+        </li>
+    </c:forEach>
+</ul>
                     <a href="allPlants.jsp" class="action-btn">View All Plants</a>
                 </div>
                 
@@ -111,24 +104,18 @@
                 <div class="recent-card">
                     <h3>New User Signups</h3>
                     <ul class="recent-list">
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Jeshmin Shrestha</h4>
-                               
-                            </div>
-                           
-                        </li>
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Ram Shrestha</h4>
-                            </div>
-                        </li>
-                        <li class="recent-item">
-                            <div class="recent-item-info">
-                                <h4>Krishna Shrestha</h4>
-                            </div>
-                        </li>
-                    </ul>
+    <c:forEach var="user" items="${recentUsers}">
+        <li class="recent-item">
+            <div class="recent-item-info"> 
+            <c:if test="${empty recentUsers}">
+    <p>No recent users found.</p>
+</c:if>
+                <h4>${user}</h4>
+            </div>
+        </li>
+    </c:forEach>
+</ul>
+
                     <a href="manageUsers.jsp" class="action-btn">Manage Users</a>
                 </div>
             </div>

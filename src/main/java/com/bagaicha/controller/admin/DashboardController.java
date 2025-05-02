@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//import com.bagaicha.service.DashboardService;
+import com.bagaicha.service.DashboardService;
 
 /**
  * Servlet implementation for handling dashboard-related HTTP requests.
@@ -19,37 +19,26 @@ import java.io.IOException;
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/dashboard" })
 public class DashboardController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private DashboardService dashboardService;
 
-	// Instance of DashboardService for handling business logic
-	//private DashboardService dashboardService;
+    public DashboardController() {
+        this.dashboardService = new DashboardService();
+    }
 
-	/**
-	 * Default constructor initializes the DashboardService instance.
-	 */
-	public DashboardController() {
-		//this.dashboardService = new DashboardService();
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-	/**
-	 * Handles HTTP GET requests by retrieving student information and forwarding
-	 * the request to the dashboard JSP page.
-	 * 
-	 * @param request  The HttpServletRequest object containing the request data.
-	 * @param response The HttpServletResponse object used to return the response.
-	 * @throws ServletException If an error occurs during request processing.
-	 * @throws IOException      If an input or output error occurs.
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    
-	    // ⚠️ Remove or comment these if not implemented yet
-	    // request.setAttribute("plantList", dashboardService.getAllPlants());
-	    // request.setAttribute("totalPlants", dashboardService.getTotalPlants());
-	    // request.setAttribute("seasonalPlants", dashboardService.getPlantsBySeason("Spring"));
-	    // request.setAttribute("sunlightPlants", dashboardService.getPlantsBySunlight("Full Sun"));
+        int totalUsers = dashboardService.getTotalUsers();
+        int totalPlants = dashboardService.getTotalPlants();
+        int totalCategories = dashboardService.getTotalCategories();
 
-	    request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
-	}
+        request.setAttribute("totalUsers", totalUsers);
+        request.setAttribute("totalPlants", totalPlants);
+        request.setAttribute("totalCategories", totalCategories);
+        request.setAttribute("recentPlants", dashboardService.getRecentPlants());
+        request.setAttribute("recentUsers", dashboardService.getRecentUsers());
+        request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
+    }
 }

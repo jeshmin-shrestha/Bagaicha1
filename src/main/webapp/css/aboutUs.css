@@ -26,6 +26,8 @@
             overflow: hidden;
             background:url('../resources/images/system/aboutus.png');
             height:950px;
+               background-size: cover; 
+             background-position: center;
         }
         .about-header h1 {
             margin: 0;

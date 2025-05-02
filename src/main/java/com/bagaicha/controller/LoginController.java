@@ -66,11 +66,11 @@ public class LoginController extends HttpServlet {
 	            SessionUtil.setAttribute(req, "userName", userName);
 	            if (userName.equals("rames")) {
 	                SessionUtil.setAttribute(req, "role", "admin");
-	                CookieUtil.addCookie(resp, "role", "admin", 5 * 30);
+	                CookieUtil.addCookie(resp, "role", "admin", 30 * 30);//30 minutes
 	                resp.sendRedirect(req.getContextPath() + "/dashboard");
 	            } else {
 	                SessionUtil.setAttribute(req, "role", "user");
-	                CookieUtil.addCookie(resp, "role", "user", 5 * 30);
+	                CookieUtil.addCookie(resp, "role", "user", 30 * 30);
 	                resp.sendRedirect(req.getContextPath() + "/userHome");
 	            }
 	        } else {
