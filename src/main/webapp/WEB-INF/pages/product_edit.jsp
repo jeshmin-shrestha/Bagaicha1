@@ -139,11 +139,13 @@
         <input type="hidden" name="existingImage" value="${plant.imageUrl}" />
     </c:if>
                 
-                <!-- Image Section -->
-                <div class="image-section">
-                    <c:if test="${not empty plant.imageUrl}">
-                        <img src="${plant.imageUrl}" alt="Plant Image" class="plant-image">
-                    </c:if>
+               <!-- Image Section -->
+<div class="image-section">
+    <c:if test="${not empty plant.imageUrl}">
+        <img src="${pageContext.request.contextPath}/resources/images/system/${plant.imageUrl}" 
+             alt="Plant Image" class="plant-image"width="250" height="250"
+             onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/images/system/default_plant.jpg'">
+                              </c:if>
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="form-image">Image</label>

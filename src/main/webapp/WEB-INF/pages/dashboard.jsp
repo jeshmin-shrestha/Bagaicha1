@@ -97,7 +97,7 @@
         </li>
     </c:forEach>
 </ul>
-                    <a href="allPlants.jsp" class="action-btn">View All Plants</a>
+<a href="${pageContext.request.contextPath}/adminProduct" class="action-btn">View All Plants</a>
                 </div>
                 
                 <!-- New User Registrations -->
@@ -116,7 +116,7 @@
     </c:forEach>
 </ul>
 
-                    <a href="manageUsers.jsp" class="action-btn">Manage Users</a>
+                   <!--   <a href="manageUsers.jsp" class="action-btn">Manage Users</a>-->
                 </div>
             </div>
         </section>

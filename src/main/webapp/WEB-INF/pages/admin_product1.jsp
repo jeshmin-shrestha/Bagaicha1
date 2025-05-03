@@ -94,8 +94,11 @@
     <td><%= plant.getCareDescription() %></td>
     <td><%= plant.getPlantAddedDate() %></td>
     <td>
-        <img src="<%= plant.getImageUrl() %>" alt="Plant Image" width="60" height="60">
-    </td>
+     
+    
+    <img src="${pageContext.request.contextPath}/resources/images/system/<%= plant.getImageUrl() %>" 
+         alt="Plant Image" width="60" height="60">
+</td>
     <td><%= plant.getCategoryId() %></td>
     <td>
         <div class="action-icons">
@@ -107,7 +110,7 @@
         onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
     <i class="fas fa-edit"></i>
 </button>
-            <button class="action-icon delete" title="Delete"><i class="fas fa-trash-alt"></i></button>
+            <button class="action-icon delete" title="Delete"><i class="fas fa-trash-alt" onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'"></i></button>
         </div>
     </td>
 </tr>
