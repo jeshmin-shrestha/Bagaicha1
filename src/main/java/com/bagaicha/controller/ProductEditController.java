@@ -130,7 +130,7 @@ public class ProductEditController extends HttpServlet {
         if (success) {
             session.setAttribute("popupMessage", "Plant added successfully!");
             session.setAttribute("popupType", "success");
-            response.sendRedirect("productEdit?plantId=" + plant.getPlantId());
+            response.sendRedirect("adminProduct");
         } else {
             session.setAttribute("popupMessage", "Failed to add plant");
             session.setAttribute("popupType", "error");

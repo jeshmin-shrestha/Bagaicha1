@@ -28,9 +28,9 @@
             <div class="section-header">
                 <h2 class="section-title">Plant Collection</h2>
                 <div class="action-buttons">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Add Plant
-                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/productEdit'">
+    <i class="fas fa-plus"></i> Add Plant
+</button>
                     <div class="search-wrapper">
     <form action="${pageContext.request.contextPath}/adminProduct" method="get">
         <input type="text" class="search-input" name="search" 
@@ -103,7 +103,10 @@
         onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
     <i class="fas fa-eye"></i>
 </button>
-            <button class="action-icon edit" title="Edit"><i class="fas fa-edit"></i></button>
+            <button class="action-icon edit" title="Edit" 
+        onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
+    <i class="fas fa-edit"></i>
+</button>
             <button class="action-icon delete" title="Delete"><i class="fas fa-trash-alt"></i></button>
         </div>
     </td>
