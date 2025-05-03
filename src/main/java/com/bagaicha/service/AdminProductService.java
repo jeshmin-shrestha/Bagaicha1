@@ -6,7 +6,6 @@ import com.bagaicha.model.PlantModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class AdminProductService {
 
     public List<PlantModel> getAllPlants() {
@@ -86,10 +85,47 @@ public class AdminProductService {
         }
         return plant;
     }
+    public boolean addPlant(PlantModel plant) throws ClassNotFoundException {
+        String sql = "INSERT INTO plant (plant_name, scientific_name, soil_type, fertilizer_requirement, " +
+                     "sunlight_requirement, blooming_season, water_frequency, care_description, " +
+                     "image_url, category_id, plant_added_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DbConfig.getDbConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            stmt.setString(1, plant.getPlantName());
+            stmt.setString(2, plant.getScientificName());
+            stmt.setString(3, plant.getSoilType());
+            stmt.setString(4, plant.getFertilizerRequirement());
+            stmt.setString(5, plant.getSunlightRequirement());
+            stmt.setString(6, plant.getBloomingSeason());
+            stmt.setString(7, plant.getWaterFrequency());
+            stmt.setString(8, plant.getCareDescription());
+            stmt.setString(9, plant.getImageUrl());
+            stmt.setInt(10, plant.getCategoryId());
+            stmt.setDate(11, new java.sql.Date(System.currentTimeMillis()));
+            
+            int rowsAffected = stmt.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        plant.setPlantId(generatedKeys.getInt(1));
+                    }
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error adding plant: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean updatePlant(PlantModel plant) throws ClassNotFoundException {
         String sql = "UPDATE plant SET plant_name=?, scientific_name=?, soil_type=?, " +
                      "fertilizer_requirement=?, sunlight_requirement=?, blooming_season=?, " +
-                     "water_frequency=?, care_description=?, category_id=? WHERE plant_id=?";
+                     "water_frequency=?, care_description=?, category_id=?, image_url=? WHERE plant_id=?";
         
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -103,12 +139,29 @@ public class AdminProductService {
             stmt.setString(7, plant.getWaterFrequency());
             stmt.setString(8, plant.getCareDescription());
             stmt.setInt(9, plant.getCategoryId());
-            stmt.setInt(10, plant.getPlantId());
+            stmt.setString(10, plant.getImageUrl());
+            stmt.setInt(11, plant.getPlantId());
             
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Error updating plant: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deletePlant(int plantId) throws ClassNotFoundException {
+        String sql = "DELETE FROM plant WHERE plant_id = ?";
+        
+        try (Connection conn = DbConfig.getDbConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, plantId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.err.println("Error deleting plant: " + e.getMessage());
             e.printStackTrace();
             return false;
         }

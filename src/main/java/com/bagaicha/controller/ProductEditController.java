@@ -1,84 +1,167 @@
 package com.bagaicha.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.sql.SQLException;
+
+
+
 import com.bagaicha.model.PlantModel;
 import com.bagaicha.service.AdminProductService;
+import com.bagaicha.util.ValidationUtil;
 
-@WebServlet("/productEdit")
+@WebServlet(asyncSupported = true, urlPatterns = { "/productEdit" })
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+                maxFileSize = 1024 * 1024 * 10,      // 10MB
+                maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class ProductEditController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
+    private AdminProductService plantService;
+
+    public ProductEditController() {
+        this.plantService = new AdminProductService();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
         String plantIdParam = request.getParameter("plantId");
         
-        // Clear any previous messages
+        // Clear previous messages
         request.removeAttribute("error");
-        request.removeAttribute("info");
+        request.removeAttribute("success");
+        
+        // Handle success/error messages from redirects
+        if (request.getParameter("success") != null) {
+            request.setAttribute("success", request.getParameter("success"));
+        }
+        if (request.getParameter("error") != null) {
+            request.setAttribute("error", request.getParameter("error"));
+        }
         
         if (plantIdParam != null && !plantIdParam.isEmpty()) {
             try {
-                int plantId = Integer.parseInt(plantIdParam);
-                AdminProductService plantService = new AdminProductService();
-                PlantModel plant = plantService.getPlantById(plantId);
+            	   int plantId = Integer.parseInt(plantIdParam);
+                   AdminProductService plantService = new AdminProductService();
+                   PlantModel plant = plantService.getPlantById(plantId);
+                   
                 
                 if (plant != null) {
                     request.setAttribute("plant", plant);
-                    System.out.println("DEBUG: Found plant - " + plant.getPlantName());
                 } else {
-                    request.setAttribute("error", "Plant with ID " + plantId + " not found");
-                    System.out.println("DEBUG: Plant not found for ID " + plantId);
+                    request.setAttribute("error", "Plant not found with ID: " + plantId);
                 }
             } catch (NumberFormatException e) {
                 request.setAttribute("error", "Invalid plant ID format");
-                System.out.println("DEBUG: Invalid plant ID format - " + plantIdParam);
-            } catch (Exception e) {
-                request.setAttribute("error", "Error retrieving plant: " + e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
-            request.setAttribute("info", "Creating new plant entry");
-            System.out.println("DEBUG: No plant ID - creating new entry");
+            } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         
         request.getRequestDispatcher("/WEB-INF/pages/product_edit.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        
-        // Handle form submission for create/update/delete
         String action = request.getParameter("action");
-        AdminProductService plantService = new AdminProductService();
-        boolean success = false;
+        
+        if (action == null || action.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action parameter is required");
+            return;
+        }
         
         try {
-            if ("update".equals(action)) {
-                PlantModel plant = createPlantFromRequest(request);
-                success = plantService.updatePlant(plant);
-          
+            switch (action) {
+                case "update":
+                    handleUpdate(request, response);
+                    break;
+                case "add":
+                    handleAdd(request, response);
+                    break;
+                case "delete":
+                    handleDelete(request, response);
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
             }
-            
-            if (success) {
-                response.sendRedirect("productEdit?plantId=" + request.getParameter("plantId") + "&success=true");
-            } else {
-                response.sendRedirect("productEdit?plantId=" + request.getParameter("plantId") + "&error=update_failed");
-            }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            response.sendRedirect("productEdit?error=server_error");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 
+                "Database driver not found: " + e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 
+                "Database error: " + e.getMessage());
         }
     }
     
+    
+    
+    private void handleUpdate(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        AdminProductService plantService = new AdminProductService();
+        PlantModel plant = createPlantFromRequest(request);
+        
+        boolean success = plantService.updatePlant(plant);
+        HttpSession session = request.getSession();
+        if (success) {
+        	session.setAttribute("popupMessage", "Plant updated successfully!");
+            session.setAttribute("popupType", "success");
+            response.sendRedirect("productEdit?plantId=" + plant.getPlantId() + "&success=true");
+        } else {
+        	session.setAttribute("popupMessage", "Failed to update plant");
+            session.setAttribute("popupType", "error");
+            response.sendRedirect("productEdit?plantId=" + plant.getPlantId() + "&error=update_failed");
+        }
+    }
+
+    private void handleAdd(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        AdminProductService plantService = new AdminProductService();
+        PlantModel plant = createPlantFromRequest(request);
+        
+        boolean success = plantService.addPlant(plant);
+        HttpSession session = request.getSession();
+        
+        if (success) {
+            session.setAttribute("popupMessage", "Plant added successfully!");
+            session.setAttribute("popupType", "success");
+            response.sendRedirect("productEdit?plantId=" + plant.getPlantId());
+        } else {
+            session.setAttribute("popupMessage", "Failed to add plant");
+            session.setAttribute("popupType", "error");
+            response.sendRedirect("productEdit");
+        }
+    }
+
+    private void handleDelete(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        int plantId = Integer.parseInt(request.getParameter("plantId"));
+        AdminProductService plantService = new AdminProductService();
+        
+        boolean success = plantService.deletePlant(plantId);
+        HttpSession session = request.getSession();
+        if (success) {
+        	session.setAttribute("popupMessage", "Plant deleted successfully!");
+            session.setAttribute("popupType", "success");
+            response.sendRedirect("productList?success=delete_success");
+        } else {
+        	session.setAttribute("popupMessage", "Failed to delete plant");
+            session.setAttribute("popupType", "error");
+            response.sendRedirect("productEdit?plantId=" + plantId + "&error=delete_failed");
+        }
+    }
     private PlantModel createPlantFromRequest(HttpServletRequest request) {
         PlantModel plant = new PlantModel();
-        // Set all plant properties from request parameters
+        
         if (request.getParameter("plantId") != null && !request.getParameter("plantId").isEmpty()) {
             plant.setPlantId(Integer.parseInt(request.getParameter("plantId")));
         }
+        
         plant.setPlantName(request.getParameter("plantName"));
         plant.setScientificName(request.getParameter("scientificName"));
         plant.setSoilType(request.getParameter("soilType"));
@@ -87,8 +170,45 @@ public class ProductEditController extends HttpServlet {
         plant.setBloomingSeason(request.getParameter("season"));
         plant.setWaterFrequency(request.getParameter("water"));
         plant.setCareDescription(request.getParameter("description"));
-        plant.setCategoryId(Integer.parseInt(request.getParameter("plantCategory")));
-        // Handle image upload separately
+        
+        if (request.getParameter("plantCategory") != null && !request.getParameter("plantCategory").isEmpty()) {
+            plant.setCategoryId(Integer.parseInt(request.getParameter("plantCategory")));
+        }
+        
+        // Handle image upload if needed
         return plant;
+    }
+    
+private String validatePlantForm(HttpServletRequest request) {
+        String plantName = request.getParameter("plantName");
+        String scientificName = request.getParameter("scientificName");
+        String soilType = request.getParameter("soilType");
+        String fertilizer = request.getParameter("fertilizer");
+        String sunlight = request.getParameter("sunlight");
+        String season = request.getParameter("season");
+        String water = request.getParameter("water");
+        String description = request.getParameter("description");
+        String category = request.getParameter("plantCategory");
+        
+        // Basic validation
+        if (ValidationUtil.isNullOrEmpty(plantName)) {
+            return "Plant name is required";
+        }
+        if (ValidationUtil.isNullOrEmpty(scientificName)) {
+            return "Scientific name is required";
+        }
+        if (ValidationUtil.isNullOrEmpty(soilType)) {
+            return "Soil type is required";
+        }
+        if (ValidationUtil.isNullOrEmpty(category)) {
+            return "Category is required";
+        }
+        
+        // Add more specific validations as needed
+        if (plantName.length() > 100) {
+            return "Plant name must be less than 100 characters";
+        }
+        
+        return null;
     }
 }

@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:if test="${not empty sessionScope.message}">
+    <div class="alert alert-${sessionScope.messageType}">
+        ${sessionScope.message}
+    </div>
+    <c:remove var="message" scope="session"/>
+    <c:remove var="messageType" scope="session"/>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,49 +16,97 @@
     <title>${not empty plant.plantId ? 'View/Edit Plant' : 'Add New Plant'} | Bagaicha</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/product_edit.css" />
-    <script>
-        function toggleEditMode() {
-            const form = document.querySelector('.edit-body');
-            const inputs = form.querySelectorAll('input, select, textarea');
-            const isViewMode = form.classList.contains('view-mode');
-            
-            if (isViewMode) {
-                // Switch to edit mode
-                form.classList.remove('view-mode');
+<script>
+    function toggleEditMode() {
+        const form = document.querySelector('.edit-body');
+        const inputs = form.querySelectorAll('input, select, textarea');
+        const isViewMode = form.classList.contains('view-mode');
+        
+        if (isViewMode) {
+            // Switch to edit mode
+            form.classList.remove('view-mode');
+            inputs.forEach(input => {
+                input.disabled = false;
+                if (input.type === 'file') {
+                    input.style.display = 'block';
+                }
+            });
+            document.querySelector('.btn-edit').style.display = 'none';
+            document.querySelector('.action-buttons').style.display = 'flex';
+        }
+    }
+
+    function initEditMode() {
+        <c:choose>
+            <c:when test="${empty plant.plantId}">
+                // New plant - always in edit mode
+                document.querySelector('.edit-body').classList.remove('view-mode');
+                // Explicitly show action buttons
+                document.querySelector('.action-buttons').style.display = 'flex';
+                // Hide edit button (not needed for new plants)
+                document.querySelector('.btn-edit').style.display = 'none';
+            </c:when>
+            <c:otherwise>
+                // Existing plant - start in view mode
+                document.querySelector('.edit-body').classList.add('view-mode');
+                const inputs = document.querySelectorAll('.edit-body input, .edit-body select, .edit-body textarea');
                 inputs.forEach(input => {
-                    input.disabled = false;
+                    input.disabled = true;
                     if (input.type === 'file') {
-                        input.style.display = 'block';
+                        input.style.display = 'none';
                     }
                 });
-                document.querySelector('.btn-edit').style.display = 'none';
-                document.querySelector('.action-buttons').style.display = 'flex';
-            }
-        }
+                document.querySelector('.action-buttons').style.display = 'none';
+            </c:otherwise>
+        </c:choose>
+    }
+    function showPopup(message, type) {
+        // Create popup element
+        const popup = document.createElement('div');
+        popup.className = `popup ${type}`;
+        popup.innerHTML = `
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <p>${message}</p>
+            </div>
+        `;
         
-        function initEditMode() {
-            <c:choose>
-                <c:when test="${empty plant.plantId}">
-                    // New plant - always in edit mode
-                    document.querySelector('.edit-body').classList.remove('view-mode');
-                </c:when>
-                <c:otherwise>
-                    // Existing plant - start in view mode
-                    document.querySelector('.edit-body').classList.add('view-mode');
-                    const inputs = document.querySelectorAll('.edit-body input, .edit-body select, .edit-body textarea');
-                    inputs.forEach(input => {
-                        input.disabled = true;
-                        if (input.type === 'file') {
-                            input.style.display = 'none';
-                        }
-                    });
-                    document.querySelector('.action-buttons').style.display = 'none';
-                </c:otherwise>
-            </c:choose>
-        }
+        // Add to body
+        document.body.appendChild(popup);
         
-        window.onload = initEditMode;
-    </script>
+        // Auto-close after 3 seconds
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 300);
+        }, 3000);
+        
+        // Manual close
+        popup.querySelector('.close-btn').addEventListener('click', () => {
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 300);
+        });
+    }
+
+    // Initialize everything when page loads
+    window.onload = function() {
+        initEditMode();
+        
+        <c:if test="${not empty sessionScope.popupMessage}">
+            showPopup("${sessionScope.popupMessage}", "${sessionScope.popupType}");
+            <c:remove var="popupMessage" scope="session"/>
+            <c:remove var="popupType" scope="session"/>
+        </c:if>
+    };
+
+    // Form submission logging
+    document.querySelector('form').addEventListener('submit', function(e) {
+        console.log("Submitting form with:", {
+            plantId: this.plantId.value,
+            action: document.activeElement.value,
+            plantName: this.plantName.value
+        });
+    });
+</script>
 </head>
 <body>
     <!-- Header Include -->
@@ -66,12 +122,8 @@
     </div>
 
     <div class="main-container">
-        <c:if test="${not empty error}">
-            <div class="alert alert-danger">${error}</div>
-        </c:if>
-        <c:if test="${not empty info}">
-            <div class="alert alert-info">${info}</div>
-        </c:if>
+    <!-- Add this with your other message displays -->
+
         
         <div class="edit-card">
             <div class="edit-header">
@@ -82,7 +134,10 @@
             </div>
 
             <form method="post" action="productEdit" enctype="multipart/form-data" class="edit-body">
-                <input type="hidden" name="plantId" value="${plant.plantId}">
+                <input type="hidden" name="plantId" value="${plant.plantId}" />
+    <c:if test="${not empty plant.imageUrl}">
+        <input type="hidden" name="existingImage" value="${plant.imageUrl}" />
+    </c:if>
                 
                 <!-- Image Section -->
                 <div class="image-section">
@@ -157,8 +212,8 @@
                         <label for="sunlight">Sunlight Requirement</label>
                         <select name="sunlight" id="sunlight" required>
                             <option value="">Select Sunlight</option>
-                            <option value="Full sun" ${plant.sunlightRequirement == 'Full Sun' ? 'selected' : ''}>Full sun</option>
-                            <option value="Partial sun" ${plant.sunlightRequirement == 'Partial Sun' ? 'selected' : ''}>Partial sun</option>
+                            <option value="Full Sun" ${plant.sunlightRequirement == 'Full Sun' ? 'selected' : ''}>Full Sun</option>
+                            <option value="Partial Sun" ${plant.sunlightRequirement == 'Partial Sun' ? 'selected' : ''}>Partial Sun</option>
                             <option value="Shade" ${plant.sunlightRequirement == 'Shade' ? 'selected' : ''}>Shade</option>
                         </select>
                     </div>
@@ -175,7 +230,19 @@
                             <option value="Every 2-3 days" ${plant.waterFrequency == 'Every 2-3 days' ? 'selected' : ''}>Every 2-3 days</option>
                         </select>
                     </div>
-                    
+                    <!-- Blooming Season -->
+<div class="form-group">
+    <label for="season">Blooming Season</label>
+    <select name="season" id="season" required>
+        <option value="">Select Season</option>
+        <option value="Spring" ${plant.bloomingSeason == 'Spring' ? 'selected' : ''}>Spring</option>
+        <option value="Summer" ${plant.bloomingSeason == 'Summer' ? 'selected' : ''}>Summer</option>
+        <option value="Fall" ${plant.bloomingSeason == 'Fall' ? 'selected' : ''}>Fall</option>
+        <option value="Winter" ${plant.bloomingSeason == 'Winter' ? 'selected' : ''}>Winter</option>
+        <option value="Year-round" ${plant.bloomingSeason == 'Year-round' ? 'selected' : ''}>Year-round</option>
+    </select>
+</div>
+                   
                     <div class="form-group full-width">
                         <label for="description">Care Description</label>
                         <textarea name="description" id="description">${plant.careDescription}</textarea>
@@ -183,14 +250,17 @@
                 </div>
 
                 <!-- Action Buttons (Hidden in view mode) -->
-                <div class="action-buttons">
-                    <button type="button" class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
-                    <c:if test="${not empty plant.plantId}">
-                        <button type="submit" class="btn btn-delete" name="action" value="delete">Delete Plant</button>
-                        <button type="submit" class="btn btn-update" name="action" value="update">Update Plant</button>
-                    </c:if>
-                    <button type="submit" class="btn btn-add" name="action" value="add">Add New Plant</button>
-                </div>
+              <div class="action-buttons">
+        <button type="button" class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
+        <c:if test="${not empty plant.plantId}">
+            <button type="submit" class="btn btn-delete" name="action" value="delete" 
+                    onclick="return confirm('Are you sure you want to delete this plant?')">Delete</button>
+            <button type="submit" class="btn btn-update" name="action" value="update">Update</button>
+        </c:if>
+        <c:if test="${ empty plant.plantId}">
+            <button type="submit" class="btn btn-add" name="action" value="add">Add Plant</button>
+        </c:if>
+    </div>
             </form>
         </div>
     </div>
