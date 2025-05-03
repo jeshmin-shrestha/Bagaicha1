@@ -113,4 +113,53 @@ public class AdminProductService {
             return false;
         }
     }
+ // Add this method to your AdminProductService class
+    public List<PlantModel> searchPlants(String searchTerm) {
+        List<PlantModel> plants = new ArrayList<>();
+        
+        // Search in multiple fields: plant_name, scientific_name, soil_type, etc.
+        String sql = "SELECT * FROM plant WHERE " +
+                     "plant_name LIKE ? OR " +
+                     "scientific_name LIKE ? OR " +
+                     "soil_type LIKE ? OR " +
+                     "fertilizer_requirement LIKE ? OR " +
+                     "sunlight_requirement LIKE ? OR " +
+                     "blooming_season LIKE ? OR " +
+                     "water_frequency LIKE ? OR " +
+                     "care_description LIKE ?";
+        
+        try (Connection conn = DbConfig.getDbConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            // Add wildcards to search for partial matches
+            String searchPattern = "%" + searchTerm + "%";
+            for (int i = 1; i <= 8; i++) {
+                ps.setString(i, searchPattern);
+            }
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    PlantModel plant = new PlantModel();
+                    plant.setPlantId(rs.getInt("plant_id"));
+                    plant.setPlantName(rs.getString("plant_name"));
+                    plant.setScientificName(rs.getString("scientific_name"));
+                    plant.setSoilType(rs.getString("soil_type"));
+                    plant.setFertilizerRequirement(rs.getString("fertilizer_requirement"));
+                    plant.setSunlightRequirement(rs.getString("sunlight_requirement"));
+                    plant.setBloomingSeason(rs.getString("blooming_season"));
+                    plant.setWaterFrequency(rs.getString("water_frequency"));
+                    plant.setCareDescription(rs.getString("care_description"));
+                    plant.setPlantAddedDate(rs.getDate("plant_added_date")); 
+                    plant.setImageUrl(rs.getString("image_url"));
+                    plant.setCategoryId(rs.getInt("category_id"));
+                    plants.add(plant);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Search results for '" + searchTerm + "': " + plants.size() + " plants found");
+        return plants;
+    }
 }

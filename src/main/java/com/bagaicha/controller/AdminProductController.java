@@ -17,15 +17,18 @@ public class AdminProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        System.out.println("[DEBUG] AdminProductController - doGet() called");
+System.out.println("[DEBUG] AdminProductController - doGet() called");
         
         AdminProductService plantService = new AdminProductService();
-        List<PlantModel> plantList = plantService.getAllPlants();
+        List<PlantModel> plantList;
         
-        // Debug output
-        System.out.println("[DEBUG] Retrieved " + (plantList != null ? plantList.size() : "null") + " plants");
-        if (plantList != null && !plantList.isEmpty()) {
-            System.out.println("[DEBUG] First plant: " + plantList.get(0).getPlantName());
+        // Check for search parameter
+        String searchTerm = request.getParameter("search");
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            plantList = plantService.searchPlants(searchTerm.trim());
+            request.setAttribute("searchTerm", searchTerm.trim()); // For displaying in the search box
+        } else {
+            plantList = plantService.getAllPlants();
         }
         
         request.setAttribute("plantList", plantList);

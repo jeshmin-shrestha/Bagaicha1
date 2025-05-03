@@ -32,11 +32,15 @@
                         <i class="fas fa-plus"></i> Add Plant
                     </button>
                     <div class="search-wrapper">
-                        <input type="text" class="search-input" placeholder="Search plants...">
-                        <button class="search-btn">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
+    <form action="${pageContext.request.contextPath}/adminProduct" method="get">
+        <input type="text" class="search-input" name="search" 
+               placeholder="Search plants" 
+               value="${searchTerm}">
+        <button type="submit" class="search-btn">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
                     <button class="btn btn-outline">
                         <i class="fas fa-sort"></i> Sort By
                     </button>
