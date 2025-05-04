@@ -74,66 +74,50 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Plants Gallery Section -->
-        <section class="plants-section">
-            <h2 class="section-title">Your Plant Collection</h2>
-            <div class="plants-grid">
-                <!-- Plant Card 1 -->
-                <div class="plant-card">
-                    <img src="resources/images/system/rose1.jpg" alt="Snake Plant" class="plant-image">
-                    <div class="plant-info">
-                        <h3>Rose </h3>
-                        <div class="plant-meta">
-                           
-                        </div>
-                        <button class="see-more-btn">View Details</button>
-                    </div>
+    
+    <!-- Plants Gallery Section -->
+<section class="plants-section">
+    <h2 class="section-title">Your Plant Collection</h2>
+    <div class="plants-grid">
+        <c:choose>
+            <c:when test="${not empty plants}">
+                <!-- Dynamic plant cards -->
+                <c:forEach items="${plants}" var="plant" varStatus="loop">
+    <div class="plant-card">
+        <c:choose>
+            <c:when test="${not empty plant.imageUrl}">
+                <img src="${pageContext.request.contextPath}${plant.imageUrl}" 
+                     alt="${plant.plantName}" class="plant-image"
+                     onerror="this.src='${pageContext.request.contextPath}/resources/images/system/default-plant.jpg'">
+            </c:when>
+            <c:otherwise>
+                <img src="${pageContext.request.contextPath}/resources/images/system/default-plant.jpg" 
+                     alt="${plant.plantName}" class="plant-image">
+            </c:otherwise>
+        </c:choose>
+        <div class="plant-info">
+            <h3>${plant.plantName}</h3>
+            <p class="scientific-name">${plant.scientificName}</p>
+            <button class="see-more-btn" 
+        onclick="location.href='${pageContext.request.contextPath}/productView?id=${plant.plantId}'">
+    View Details
+</button>
+        </div>
+    </div>
+</c:forEach>
+            </c:when>
+            <c:otherwise>
+                <div class="no-plants-message">
+                    <p>No plants found in your collection.</p>
                 </div>
-                
-                <!-- Plant Card 2 -->
-                <div class="plant-card">
-                    <img src="resources/images/system/lily1.jpg" alt="Peace Lily" class="plant-image">
-                    <div class="plant-info">
-                        <h3>Peace Lily</h3>
-                        <div class="plant-meta">
-                           
-                        </div>
-                        <button class="see-more-btn">View Details</button>
-                    </div>
-                </div>
-                
-                <!-- Plant Card 3 -->
-                <div class="plant-card">
-                    <img src="resources/images/system/marigold1.jpg" alt="Monstera" class="plant-image">
-                    <div class="plant-info">
-                        <h3>Marigold</h3>
-                        <div class="plant-meta">
-                            
-                        </div>
-                        <button class="see-more-btn">View Details</button>
-                    </div>
-                </div>
-                
-                <!-- Plant Card 4 -->
-                <div class="plant-card">
-                    <img src="resources/images/system/aloevera1.jpg" alt="Pothos" class="plant-image">
-                    <div class="plant-info">
-                        <h3>Aloe Vera</h3>
-                        <div class="plant-meta">
-                           
-                        </div>
-                       <button class="see-more-btn" onclick="location.href='${pageContext.request.contextPath}/productView';">View Details</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="browse-all">
-               <a href="${pageContext.request.contextPath}/productList"
- class="browse-all-btn">Browse All Plants</a>
-            </div>
-        </section>
-        
+            </c:otherwise>
+        </c:choose>
+    </div>
+    
+    <div class="browse-all">
+        <a href="${pageContext.request.contextPath}/productList" class="browse-all-btn">Browse All Plants</a>
+    </div>
+</section>
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="section-title">Explore More</h2>

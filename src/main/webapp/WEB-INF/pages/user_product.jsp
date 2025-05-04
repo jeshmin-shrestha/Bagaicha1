@@ -66,55 +66,89 @@
                     </div>
                 </div>
             </div>
+    <!-- Plant Details Section -->
+        <section class="product-card">
+            <div class="name_product">
+                <div>
+                    <h3>${plant.plantName}</h3> 
+                    <span class="scientific-name">${plant.scientificName}</span> 
+                </div>
+                <img src="${pageContext.request.contextPath}${plant.imageUrl}" 
+                     alt="${plant.plantName}" class="plant-image"
+                     onerror="this.src='${pageContext.request.contextPath}/resources/images/system/default-plant.jpg'">
+            </div>
+            
+            <div class="plant-details-container">
+                <!-- Watering Requirement -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Watering Requirement</div>
+                        <div class="detail-value">${plant.waterFrequency}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/water_icon.png" alt="Water" class="detail-icon">
+                </div>
+                
+                <!-- Sunlight Requirement -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Sunlight Requirement</div>
+                        <div class="detail-value">${plant.sunlightRequirement}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/sun_icon.png" alt="Sun" class="detail-icon">
+                </div>
+                
+                <!-- Plant Category -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Plant Category</div>
+                        <div class="detail-value">${plant.categoryId}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/tree_icon.png" alt="Category" class="detail-icon">
+                </div>
+                
+                <!-- Soil Type -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Soil Type</div>
+                        <div class="detail-value">${plant.soilType}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/soil_icon.png" alt="Soil" class="detail-icon">
+                </div>
+                
+                <!-- Blooming Season -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Blooming Season</div>
+                        <div class="detail-value">${plant.bloomingSeason}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/bloom_icon.png" alt="Flower" class="detail-icon">
+                </div>
+                
+                <!-- Fertilizer Requirement -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Fertilizer Requirement</div>
+                        <div class="detail-value">${plant.fertilizerRequirement}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/fertilizer_icon.png" alt="Fertilizer" class="detail-icon">
+                </div>
+                
+                <!-- Care Description -->
+                <div class="plant-detail">
+                    <div class="detail-content">
+                        <div class="detail-label">Care Instructions</div>
+                        <div class="detail-value">${plant.careDescription}</div>
+                    </div>
+                    <img src="${pageContext.request.contextPath}/resources/images/system/care_icon.png" alt="Care" class="detail-icon">
+                </div>
+            </div>
+            
+            <div class="back-button">
+                <button onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i> Back to Plants
+                </button>
+            </div>
         </section>
-   <section class="product-card">
-                       <div class="search-container">
-    <div class="search-wrapper">
-        <input type="text" class="search-input" placeholder="Search plants...">
-        <button class="search-btn">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
-    <button class="btn btn-outline">
-        <i class="fas fa-sort"></i> Sort By
-    </button>
-</div>  
-    <div class="name_product">
-        <div>
-            <h3>Rose</h3> 
-            <span>Rosa</span> 
-        </div>
-        <img src="resources/images/system/rose1.jpg" alt="Rose">
-    </div>
-    <div class="plant-detail">
-        <span>Watering requirement</span>
-        <img src="resources/images/system/water_icon.png" alt="Water">
-    </div>
-    <div class="plant-detail">
-        <span>Sunlight Requirement</span>
-        <img src="resources/images/system/sun_icon.png" alt="Sun">
-    </div>
-    <div class="plant-detail">
-        <span>Plant Category</span>
-        <img src="resources/images/system/tree_icon.png" alt="Category">
-    </div>
-    <div class="plant-detail">
-        <span>Soil Type</span>
-        <img src="resources/images/system/soil_icon.png" alt="Soil">
-    </div>
-    <div class="plant-detail">
-        <span>Blooming Season</span>
-        <img src="resources/images/system/bloom_icon.png" alt="Flower">
-    </div>
-    <div class="plant-detail">
-        <span>Fertilizer Requirement</span>
-        <img src="resources/images/system/fertilizer_icon.png" alt="Fertilizer">
-    </div>
-    <div class="plant-detail">
-        <span>Care Description</span>
-        <img src="resources/images/system/care_icon.png" alt="Care">
-    </div>
-</section>
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="section-title">Explore More</h2>
