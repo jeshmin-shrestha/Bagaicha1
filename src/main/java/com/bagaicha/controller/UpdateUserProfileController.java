@@ -59,6 +59,6 @@ public class UpdateUserProfileController extends HttpServlet {
 			System.out.println("ERROR: Failed to update user in database");
 			response.sendRedirect("profile?error=update_failed");
 		}
-		System.out.println("===== UPDATE PROFILE CONTROLLER END =====\n");
+		System.out.println("===== UPDATE PROFILE CONTROLLER ENDD =====\n");
 	}
 }

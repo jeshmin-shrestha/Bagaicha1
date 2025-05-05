@@ -1,95 +1,63 @@
 package com.bagaicha.controller;
 
-import java.io.IOException;
-
-import com.bagaicha.model.UserModel;
 import com.bagaicha.service.LoginService;
 import com.bagaicha.service.PasswordResetService;
+import com.bagaicha.util.SessionUtil;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
 
 @WebServlet("/passwordReset")
 public class PasswordResetController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-    private LoginService loginService;
-    private PasswordResetService profileService;
-    
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        this.loginService = new LoginService();
-        this.profileService = new PasswordResetService();
-    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    private final PasswordResetService passwordResetService = new PasswordResetService();
+    private final LoginService loginService = new LoginService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Forward to the correct JSP page
         request.getRequestDispatcher("/WEB-INF/pages/password_reset.jsp").forward(request, response);
     }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-        
-        UserModel user = (UserModel) session.getAttribute("user");
-        String currentPassword = request.getParameter("currentPassword");
+
+        String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
-        
-        // Validate inputs
-        String error = validatePasswordInputs(newPassword, confirmPassword);
-        if (error != null) {
-            request.setAttribute("error", error);
-            doGet(request, response);
-            return;
+
+        String username = (String) SessionUtil.getAttribute(request, "userName");
+
+        // Handle missing fields
+        if (username == null || oldPassword == null || newPassword == null || confirmPassword == null) {
+            request.setAttribute("error", "empty_password");
         }
-        
+        // Handle password mismatch
+        else if (!newPassword.equals(confirmPassword)) {
+            request.setAttribute("error", "password_mismatch");
+        }
         // Verify current password
-        if (!loginService.verifyPassword(user.getUserName(), currentPassword)) {
-            request.setAttribute("error", "Current password is incorrect");
-            doGet(request, response);
-            return;
+        else if (!loginService.verifyPassword(username, oldPassword)) {
+            request.setAttribute("error", "current_incorrect");
         }
-        
-        // Update password
-        boolean success = profileService.updatePassword(user.getUserId(), newPassword);
-        
-        if (success) {
-            session.setAttribute("success", "Password changed successfully");
-            response.sendRedirect(request.getContextPath() + "/profile");
-        } else {
-            request.setAttribute("error", "Failed to update password. Please try again.");
-            doGet(request, response);
+        // Attempt to update password
+        else if (!passwordResetService.updatePassword(username, newPassword)) {
+            request.setAttribute("error", "update_failed");
         }
-    }
-    
-    private String validatePasswordInputs(String newPassword, String confirmPassword) {
-        if (newPassword == null || newPassword.trim().isEmpty()) {
-            return "New password cannot be empty";
+        // If everything is successful
+        else {
+            request.setAttribute("success", "Password changed successfully!");
         }
-        
-        if (newPassword.length() < 8) {
-            return "Password must be at least 8 characters";
-        }
-        
-        if (!newPassword.equals(confirmPassword)) {
-            return "New passwords don't match";
-        }
-        
-        // Add more password complexity checks if needed
-        // Example: if (!newPassword.matches(".*[A-Z].*")) {
-        //     return "Password must contain at least one uppercase letter";
-        // }
-        
-        return null;
+
+        // Forward to the password reset page with appropriate message
+        request.getRequestDispatcher("/WEB-INF/pages/password_reset.jsp").forward(request, response);
     }
 }

@@ -117,10 +117,9 @@
 						<button type="button" class="btn btn-cancel" id="cancelBtn">
 							<i class="fas fa-times"></i> Cancel
 						</button>
-						<a href="${pageContext.request.contextPath}/passwordReset"
-							class="btn btn-change-password"> <i class="fas fa-key"></i>
-							Change Password
-						</a>
+						<a href="${pageContext.request.contextPath}/passwordReset" class="btn btn-change-password">
+    <i class="fas fa-key"></i> Change Password
+</a>
 						<button type="button" class="btn btn-logout">
 							<i class="fas fa-sign-out-alt"></i> Log out
 						</button>
