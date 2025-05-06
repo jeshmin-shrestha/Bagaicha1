@@ -305,6 +305,18 @@
         height: 150px; /* Same as width to maintain aspect ratio */
         animation: wave 3s ease-in-out infinite; /* Keep the animation */
     }
+.clear-btn {
+    background: #ddd;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+}
+.clear-btn:hover {
+    background: #ccc;
+}
 
             
             .section-header {

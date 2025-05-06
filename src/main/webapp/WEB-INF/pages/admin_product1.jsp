@@ -33,12 +33,21 @@
                     </button>
                     <div class="search-wrapper">
                         <form action="${pageContext.request.contextPath}/adminProduct" method="get">
-                            <input type="text" class="search-input" name="search" 
-                                   placeholder="Search plants" value="${searchTerm}">
-                            <button type="submit" class="search-btn">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+    <input type="text" class="search-input" name="search" placeholder="Search plants" value="${searchTerm}">
+    <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+    </button><br>
+    <c:if test="${not empty searchTerm}">
+        <a href="${pageContext.request.contextPath}/adminProduct" style="  bbackground: #ddd;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    
+    color: #333;
+    border-radius: 5px;">Clear</a>
+    </c:if>
+</form>
+
                     </div>
                     <button class="btn btn-outline">
                         <i class="fas fa-sort"></i> Sort By
@@ -110,7 +119,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-
+<br>
             <h2 class="section-title">User Table</h2>
             <table class="plant-table">
                 <thead>
