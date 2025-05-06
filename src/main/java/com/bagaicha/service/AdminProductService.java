@@ -2,6 +2,7 @@ package com.bagaicha.service;
 
 import com.bagaicha.config.DbConfig;
 import com.bagaicha.model.PlantModel;
+import com.bagaicha.model.UserModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -215,4 +216,49 @@ public class AdminProductService {
         System.out.println("Search results for '" + searchTerm + "': " + plants.size() + " plants found");
         return plants;
     }
-}
+    public List<UserModel> getAllUsers() {
+        List<UserModel> users = new ArrayList<>();
+        String query = "SELECT user_id, fullName, userName, userEmail, userPhoneNo, " +
+                       "userRole, userAddress, image FROM user"; // Fixed column & table names
+        
+        System.out.println("[DEBUG] Executing query: " + query);
+        
+        try (Connection conn = DbConfig.getDbConnection()) {
+            System.out.println("[DEBUG] Database connection successful!");
+            
+            try (PreparedStatement ps = conn.prepareStatement(query);
+                 ResultSet rs = ps.executeQuery()) {
+                
+                System.out.println("[DEBUG] Query executed, checking results...");
+                
+                while (rs.next()) {
+                    UserModel user = new UserModel();
+                    user.setUserId(rs.getInt("user_id"));
+                    user.setFullName(rs.getString("fullName"));  // Matches database
+                    user.setUserName(rs.getString("userName"));  // Matches database
+                    user.setUserEmail(rs.getString("userEmail")); // Matches database
+                    user.setUserPhoneNo(rs.getString("userPhoneNo")); // Matches database
+                    user.setUserRole(rs.getString("userRole"));
+                    user.setUserAddress(rs.getString("userAddress"));
+                    user.setImage(rs.getString("image"));
+                    
+                    users.add(user);
+                    
+                    if (users.size() == 1) {
+                        System.out.println("[DEBUG] First user found: " + user.getUserName());
+                    }
+                }
+                
+                System.out.println("[DEBUG] Total users fetched: " + users.size());
+                
+            } catch (SQLException e) {
+                System.err.println("[ERROR] SQL Error in query: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("[ERROR] Failed to connect to database: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return users;
+    }}

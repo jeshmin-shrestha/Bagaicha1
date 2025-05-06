@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin_product1.css" />
 </head>
 <body>
- <div class="header-space"></div>
+    <div class="header-space"></div>
     <div class="container">
         <!-- Welcome Section -->
         <div class="welcome-section container">
@@ -20,7 +20,7 @@
                 <h1>Welcome Back, Plant Lover!</h1>
                 <p>Let's make your plants thrive!</p>
             </div>
-            <img src="resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
+            <img src="${pageContext.request.contextPath}/resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
         </div>
 
         <!-- Plant Table Section -->
@@ -29,18 +29,17 @@
                 <h2 class="section-title">Plant Collection</h2>
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/productEdit'">
-    <i class="fas fa-plus"></i> Add Plant
-</button>
+                        <i class="fas fa-plus"></i> Add Plant
+                    </button>
                     <div class="search-wrapper">
-    <form action="${pageContext.request.contextPath}/adminProduct" method="get">
-        <input type="text" class="search-input" name="search" 
-               placeholder="Search plants" 
-               value="${searchTerm}">
-        <button type="submit" class="search-btn">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-</div>
+                        <form action="${pageContext.request.contextPath}/adminProduct" method="get">
+                            <input type="text" class="search-input" name="search" 
+                                   placeholder="Search plants" value="${searchTerm}">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
                     <button class="btn btn-outline">
                         <i class="fas fa-sort"></i> Sort By
                     </button>
@@ -55,77 +54,100 @@
                 <div class="alert alert-success">${success}</div>
             </c:if>
             
-           <table class="plant-table">
+            <table class="plant-table">
                 <thead>
-    <tr>
-        <th>ID</th>
-        <th>Plant Name</th>
-        <th>Scientific Name</th>
-        <th>Soil Type</th>
-        <th>Fertilizer</th>
-        <th>Sunlight</th>
-        <th>Blooming Season</th>
-        <th>Water Frequency</th>
-        <th>Care Description</th>
-        <th>Added Date</th>
-        <th>Image</th>
-        <th>Category ID</th>
-        <th>Actions</th>
-    </tr>
-</thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Plant Name</th>
+                        <th>Scientific Name</th>
+                        <th>Soil Type</th>
+                        <th>Fertilizer</th>
+                        <th>Sunlight</th>
+                        <th>Blooming Season</th>
+                        <th>Water Frequency</th>
+                        <th>Care Description</th>
+                        <th>Added Date</th>
+                        <th>Image</th>
+                        <th>Category ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${plantList}" var="plant">
+                        <tr>
+                            <td>${plant.plantId}</td>
+                            <td>${plant.plantName}</td>
+                            <td>${plant.scientificName}</td>
+                            <td>${plant.soilType}</td>
+                            <td>${plant.fertilizerRequirement}</td>
+                            <td>${plant.sunlightRequirement}</td>
+                            <td>${plant.bloomingSeason}</td>
+                            <td>${plant.waterFrequency}</td>
+                            <td>${plant.careDescription}</td>
+                            <td>${plant.plantAddedDate}</td>
+                            <td>
+                                <img src="${pageContext.request.contextPath}/resources/images/system/${plant.imageUrl}" 
+                                      onerror="this.src='${pageContext.request.contextPath}/resources/images/system/plants4.png'" alt="Plant Image" width="60" height="60">
+                            </td>
+                            <td>${plant.categoryId}</td>
+                            <td>
+                                <div class="action-icons">
+                                    <button class="action-icon view" title="View" 
+                                        onclick="window.location.href='productEdit?plantId=${plant.plantId}'">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-icon edit" title="Edit" 
+                                        onclick="window.location.href='productEdit?plantId=${plant.plantId}'">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-icon delete" title="Delete" 
+                                        onclick="confirmDelete(${plant.plantId})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
 
-                <%@ page import="java.util.List" %>
-<%@ page import="com.bagaicha.model.PlantModel" %>
-
-<%
-    List<PlantModel> plantList = (List<PlantModel>) request.getAttribute("plantList");
-    if (plantList != null) {
-        for (PlantModel plant : plantList) {
-%>
-<tr>
-    <td><%= plant.getPlantId() %></td>
-    <td><%= plant.getPlantName() %></td>
-    <td><%= plant.getScientificName() %></td>
-    <td><%= plant.getSoilType() %></td>
-    <td><%= plant.getFertilizerRequirement() %></td>
-    <td><%= plant.getSunlightRequirement() %></td>
-    <td><%= plant.getBloomingSeason() %></td>
-    <td><%= plant.getWaterFrequency() %></td>
-    <td><%= plant.getCareDescription() %></td>
-    <td><%= plant.getPlantAddedDate() %></td>
-    <td>
-     
-    
-    <img src="${pageContext.request.contextPath}/resources/images/system/<%= plant.getImageUrl() %>" 
-         alt="Plant Image" width="60" height="60">
-</td>
-    <td><%= plant.getCategoryId() %></td>
-    <td>
-        <div class="action-icons">
-<button class="action-icon view" title="View" 
-        onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
-    <i class="fas fa-eye"></i>
-</button>
-            <button class="action-icon edit" title="Edit" 
-        onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'">
-    <i class="fas fa-edit"></i>
-</button>
-            <button class="action-icon delete" title="Delete"><i class="fas fa-trash-alt" onclick="window.location.href='productEdit?plantId=<%= plant.getPlantId() %>'"></i></button>
-        </div>
-    </td>
-</tr>
-<%
-        }
-    }
-%>
-
+            <h2 class="section-title">User Table</h2>
+            <table class="plant-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Address</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${userList}" var="user">
+                        <tr>
+                            <td>${user.userId}</td>
+                            <td>${user.fullName}</td>
+                            <td>${user.userName}</td>
+                            <td>${user.userEmail}</td>
+                            <td>${user.userPhoneNo}</td>
+                            <td>${user.userRole}</td>
+                            <td>${user.userAddress}</td>
+                            <td>
+                                <img src="${pageContext.request.contextPath}/resources/images/system/user/${user.image}" 
+                                     onerror="this.src='${pageContext.request.contextPath}/resources/images/system/user_icon.png'" 
+                                     alt="User Image" width="60" height="60">
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
         </section>
     </div>
 
     <script>
-       
-        
         function editPlant(plantId) {
             window.location.href = 'editPlant?plantId=' + plantId;
         }
@@ -135,8 +157,9 @@
                 window.location.href = 'deletePlant?plantId=' + plantId;
             }
         }
+        
         function showPlantDetails(plantId) {
-            window.location.href = 'productEdit';
+            window.location.href = 'productEdit?plantId=' + plantId;
         }
     </script>
 

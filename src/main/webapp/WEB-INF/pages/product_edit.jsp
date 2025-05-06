@@ -144,7 +144,7 @@
     <c:if test="${not empty plant.imageUrl}">
         <img src="${pageContext.request.contextPath}/resources/images/system/${plant.imageUrl}" 
              alt="Plant Image" class="plant-image"width="250" height="250"
-             onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/images/system/default_plant.jpg'">
+             onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/images/system/plants4.png'">
                               </c:if>
                     <div class="form-row">
                         <div class="form-group full-width">

@@ -76,7 +76,7 @@ public class RegisterController extends HttpServlet {
 	@Override
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    System.out.println("5");
+	   
 
 		try {
 
@@ -94,7 +94,7 @@ public class RegisterController extends HttpServlet {
 
 			}
 
-		    System.out.println("6");
+		    
 
 
 			UserModel userModel = extractUserModel(req);
