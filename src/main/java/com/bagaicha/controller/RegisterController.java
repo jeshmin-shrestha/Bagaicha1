@@ -270,7 +270,6 @@ public class RegisterController extends HttpServlet {
 	    user.setUserPassword(userPassword);  // Store encrypted password
 	    user.setUserRole("customer"); // default role, can be changed later as needed
 	    user.setUserAddress(userAddress);
-	    user.setLastLogin(null); // to be set at login time
 	    user.setImage(imageName); // Set the image filename
 	    return user;
 	    

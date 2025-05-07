@@ -74,7 +74,7 @@ public class ImageUtil {
 	public boolean uploadImage(Part part, String rootPath, String saveFolder) {
 		String savePath = getSavePath(saveFolder);
 		File fileSaveDir = new File(savePath);
-
+		
 		// Ensure the directory exists
 		if (!fileSaveDir.exists()) {
 			if (!fileSaveDir.mkdir()) {
@@ -84,12 +84,15 @@ public class ImageUtil {
 		try {
 			// Get the image name
 			String imageName = getImageNameFromPart(part);
+			System.out.println("Image name: "+imageName);
 			// Create the file path
-			String filePath = savePath + "/" + imageName;
+			String filePath = savePath  + imageName;
 			// Write the file to the server
 			part.write(filePath);
+			System.out.println("File path: "+filePath);
 			return true; // Upload successful
 		} catch (IOException e) {
+			
 			e.printStackTrace(); // Log the exception
 			return false; // Upload failed
 		}

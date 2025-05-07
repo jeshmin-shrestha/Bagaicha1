@@ -109,9 +109,9 @@
                                         onclick="window.location.href='productEdit?plantId=${plant.plantId}'">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="action-icon delete" title="Delete" 
-                                        onclick="confirmDelete(${plant.plantId})">
-                                        <i class="fas fa-trash-alt"></i>
+                                      <button class="action-icon delete" title="Delete" 
+            onclick="deletePlant(${plant.plantId})">
+            <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
                             </td>
@@ -161,9 +161,30 @@
             window.location.href = 'editPlant?plantId=' + plantId;
         }
         
-        function confirmDelete(plantId) {
+        function deletePlant(plantId) {
             if (confirm('Are you sure you want to delete this plant?')) {
-                window.location.href = 'deletePlant?plantId=' + plantId;
+                // Create a form dynamically
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'productEdit';
+                
+                // Add parameters
+                const plantIdInput = document.createElement('input');
+                plantIdInput.type = 'hidden';
+                plantIdInput.name = 'plantId';
+                plantIdInput.value = plantId;
+                form.appendChild(plantIdInput);
+                
+                const actionInput = document.createElement('input');
+                actionInput.type = 'hidden';
+                actionInput.name = 'action';
+                actionInput.value = 'delete';
+                form.appendChild(actionInput);
+                
+                
+                
+                document.body.appendChild(form);
+                form.submit();
             }
         }
         

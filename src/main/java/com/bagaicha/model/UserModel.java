@@ -16,7 +16,7 @@ public class UserModel {
     private String userPassword;
     private String userRole; 
     private String userAddress;
-    private Timestamp lastLogin;
+    
     private PlantModel plant;
     private String image;
  // Default constructor
@@ -38,7 +38,7 @@ public class UserModel {
 		this.userPassword = userPassword;
 		this.userRole = userRole;
 		this.userAddress = userAddress;
-		this.lastLogin = lastLogin;
+	
 		this.plant=plant;
 		this.image = image;
 	}
@@ -55,39 +55,7 @@ public class UserModel {
 		this.image = image;
 		
 	}
-	// Constructor for display/user listing
-	public UserModel(int userId,String fullName, String userName,PlantModel plant, String userEmail, String userPhoneNo) {
-		super();
-		this.userId = userId;
-		this.fullName = fullName;
-		this.userName=userName;
-		this.userEmail = userEmail;
-		this.plant=plant;
-		this.userPhoneNo = userPhoneNo;
-	
-	}
-	
-	public UserModel(int userId,String fullName, String userName, String userEmail, String userPhoneNo) {
-		super();
-		this.userId = userId;
-		this.fullName = fullName;
-		this.userName=userName;
-		this.userEmail = userEmail;
-		this.userPhoneNo = userPhoneNo;
-	}
-	
-	
-	 public UserModel(String fullName, String userName, String userEmail, String userPhoneNo, String userPassword,
-			String userAddress, String image) {
-		super();
-		this.fullName = fullName;
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.userPhoneNo = userPhoneNo;
-		this.userPassword = userPassword;
-		this.userAddress = userAddress;
-		this.image = image;
-	}
+
 	// Getters and Setters
 	public int getUserId() {
 		return userId;
@@ -137,12 +105,8 @@ public class UserModel {
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
 	}
-	public Timestamp getLastLogin() {
-		return lastLogin;
-	}
-	public void setLastLogin(Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
+	
+	
 	public PlantModel getPlant() {
 		return plant;
 	}

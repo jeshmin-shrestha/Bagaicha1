@@ -43,8 +43,9 @@
 			<div class="profile-header">
 				<img
 					src="${pageContext.request.contextPath}/resources/images/system/user/${user.image}"
-					alt="Profile Picture" class="profile-avatar"
-					onerror="this.src='${pageContext.request.contextPath}/resources/images/system/newuser.png'">
+					alt="Profile Picture" class="profile-avatar">
+					
+
 				<h2>${user.fullName}</h2>
 				<button class="edit-profile-btn" id="editProfileBtn">
 					<i class="fas fa-pencil-alt"></i> Edit Profile

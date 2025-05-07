@@ -106,6 +106,14 @@
             plantName: this.plantName.value
         });
     });
+ 
+    function handleImageError(img) {
+        console.error("Failed to load image: " + img.src);
+        // Set to default image
+        img.src = "${pageContext.request.contextPath}/resources/images/system/plants4.png";
+        // Optionally show an error message
+        showPopup("Could not load plant image", "error");
+    }
 </script>
 </head>
 <body>
@@ -135,6 +143,7 @@
 
             <form method="post" action="productEdit" enctype="multipart/form-data" class="edit-body">
                 <input type="hidden" name="plantId" value="${plant.plantId}" />
+                
     <c:if test="${not empty plant.imageUrl}">
         <input type="hidden" name="existingImage" value="${plant.imageUrl}" />
     </c:if>
@@ -143,9 +152,9 @@
 <div class="image-section">
     <c:if test="${not empty plant.imageUrl}">
         <img src="${pageContext.request.contextPath}/resources/images/system/${plant.imageUrl}" 
-             alt="Plant Image" class="plant-image"width="250" height="250"
-             onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/images/system/plants4.png'">
-                              </c:if>
+             alt="Plant Image" class="plant-image" width="250" height="250"
+             onerror="handleImageError(this)">
+    </c:if>
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="form-image">Image</label>

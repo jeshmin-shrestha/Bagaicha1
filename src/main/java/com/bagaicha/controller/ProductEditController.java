@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import com.bagaicha.model.PlantModel;
 import com.bagaicha.service.AdminProductService;
+import com.bagaicha.util.ImageUtil;
 import com.bagaicha.util.ValidationUtil;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/productEdit" })
@@ -19,7 +20,8 @@ import com.bagaicha.util.ValidationUtil;
                 maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class ProductEditController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+	private final ImageUtil imageUtil = new ImageUtil();
+
     private AdminProductService plantService;
 
     public ProductEditController() {
@@ -155,13 +157,30 @@ public class ProductEditController extends HttpServlet {
             response.sendRedirect("productEdit?plantId=" + plantId + "&error=delete_failed");
         }
     }
-    private PlantModel createPlantFromRequest(HttpServletRequest request) {
+    private PlantModel createPlantFromRequest(HttpServletRequest request) throws IOException, ServletException {
         PlantModel plant = new PlantModel();
         
         if (request.getParameter("plantId") != null && !request.getParameter("plantId").isEmpty()) {
             plant.setPlantId(Integer.parseInt(request.getParameter("plantId")));
         }
         
+        Part imagePart = request.getPart("image");
+        String existingImage = request.getParameter("existingImage"); // Get existing image from hidden field
+//        String imageName = imageUtil.getImageNameFromPart(imagePart);
+     // Only process new image if one was actually uploaded
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String imageName = imageUtil.getImageNameFromPart(imagePart);
+            if (imageName != null && !imageName.isEmpty()) {
+                plant.setImageUrl("plants/" + imageName);
+                imageUtil.uploadImage(imagePart, request.getServletContext().getRealPath("/"), "plants");
+                System.out.println("New image uploaded: " + plant.getImageUrl());
+            }
+        } 
+        // If no new image but existing image exists, keep the existing one
+        else if (existingImage != null && !existingImage.isEmpty()) {
+            plant.setImageUrl(existingImage);
+            System.out.println("Keeping existing image: " + existingImage);
+        }
         plant.setPlantName(request.getParameter("plantName"));
         plant.setScientificName(request.getParameter("scientificName"));
         plant.setSoilType(request.getParameter("soilType"));
@@ -179,7 +198,7 @@ public class ProductEditController extends HttpServlet {
         return plant;
     }
     
-private String validatePlantForm(HttpServletRequest request) {
+    private String validatePlantForm(HttpServletRequest request) {
         String plantName = request.getParameter("plantName");
         String scientificName = request.getParameter("scientificName");
         String soilType = request.getParameter("soilType");
@@ -189,8 +208,7 @@ private String validatePlantForm(HttpServletRequest request) {
         String water = request.getParameter("water");
         String description = request.getParameter("description");
         String category = request.getParameter("plantCategory");
-        
-        // Basic validation
+
         if (ValidationUtil.isNullOrEmpty(plantName)) {
             return "Plant name is required";
         }
@@ -203,12 +221,32 @@ private String validatePlantForm(HttpServletRequest request) {
         if (ValidationUtil.isNullOrEmpty(category)) {
             return "Category is required";
         }
-        
-        // Add more specific validations as needed
         if (plantName.length() > 100) {
             return "Plant name must be less than 100 characters";
         }
-        
+
+        try {
+            Part image = request.getPart("image");
+            // Only validate image if it's a new plant (no plantId)
+            if (request.getParameter("plantId") == null) {
+                if (image == null || image.getSize() == 0) {
+                    return "Plant image is required for new plants";
+                }
+                if (!ValidationUtil.isValidImageExtension(image)) {
+                    return "Invalid image format. Only jpg, jpeg, png, and gif are allowed.";
+                }
+            } else if (image != null && image.getSize() > 0) {
+                // For updates, only validate if a new image was actually uploaded
+                if (!ValidationUtil.isValidImageExtension(image)) {
+                    return "Invalid image format. Only jpg, jpeg, png, and gif are allowed.";
+                }
+            }
+        } catch (Exception e) {
+            return "Error processing image upload";
+        }
+
         return null;
+
     }
+
 }
