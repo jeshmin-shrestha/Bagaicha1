@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 
 	        if (loginStatus != null && loginStatus) {
 	            SessionUtil.setAttribute(req, "userName", userName);
-	            if (userName.equals("rames")) {
+	            if (userName.equals("admin")) {
 	                SessionUtil.setAttribute(req, "role", "admin");
 	                CookieUtil.addCookie(resp, "role", "admin", 30 * 30);//30 minutes
 	                resp.sendRedirect(req.getContextPath() + "/dashboard");

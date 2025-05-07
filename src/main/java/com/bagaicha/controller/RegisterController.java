@@ -179,7 +179,13 @@ public class RegisterController extends HttpServlet {
         } catch (SQLException e) {
             return "Error checking username availability.";
         }
-
+        try {
+            if (registerService.isEmailTaken(email)) {
+                return "Email is already taken.";
+            }
+        } catch (SQLException e) {
+            return "Error checking Email availability.";
+        }
         if (ValidationUtil.isNullOrEmpty(email)) return "Email is required.";
 
         if (ValidationUtil.isNullOrEmpty(phone)) return "Phone number is required.";

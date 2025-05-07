@@ -53,7 +53,6 @@
 					<label for="login-username">Phone, email or username</label> <input
 						type="text" id="login-username" name="username" required>
 				</div>
-
 				<div class="form-group">
 					<label for="login-password">Password</label> <input type="password"
 						id="login-password" name="password" required>

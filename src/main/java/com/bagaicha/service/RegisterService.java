@@ -89,4 +89,21 @@ public class RegisterService {
 	    }
 	    return false;
 	}
+	public boolean isEmailTaken(String email) throws SQLException {
+	    if (dbConn == null) {
+	        throw new SQLException("Database connection is not available.");
+	    }
+
+	    String query = "SELECT COUNT(*) FROM user WHERE userEmail = ?";
+	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+	        stmt.setString(1, email);
+	        try (var rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0; // Returns true if email exists
+	            }
+	        }
+	    }
+	    return false;
+	}
+
 }
