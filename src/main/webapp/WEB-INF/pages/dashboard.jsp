@@ -116,8 +116,7 @@
     </c:forEach>
 </ul>
 
-                   <!--   <a href="manageUsers.jsp" class="action-btn">Manage Users</a>-->
-                </div>
+<a href="${pageContext.request.contextPath}/adminProduct" class="action-btn">View All User</a>                </div>
             </div>
         </section>
     </div>

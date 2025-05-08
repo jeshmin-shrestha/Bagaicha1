@@ -44,7 +44,7 @@ public class DashboardService {
     }
 
     public List<String> getRecentUsers() {
-        String query = "SELECT fullName FROM User ORDER BY user_id DESC LIMIT 3";
+        String query = "SELECT full_name FROM User ORDER BY user_id DESC LIMIT 3";
         return getRecentNames(query);
     }
 
@@ -62,4 +62,3 @@ public class DashboardService {
         return names;
     }
 }
-

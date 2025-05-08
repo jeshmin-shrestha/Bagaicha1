@@ -49,7 +49,7 @@ public class RegisterService {
 	   
 
 	    // The SQL query for inserting the user
-	    String insertQuery = "INSERT INTO user (fullName, userName, userEmail, userPhoneNo, userPassword, userRole, userAddress, image) "
+	    String insertQuery = "INSERT INTO user (full_name, user_name, user_email, user_phone_no, user_password, user_role, user_address, image) "
 	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
@@ -78,7 +78,7 @@ public class RegisterService {
 	        throw new SQLException("Database connection is not available.");
 	    }
 
-	    String query = "SELECT COUNT(*) FROM user WHERE userName = ?";
+	    String query = "SELECT COUNT(*) FROM user WHERE user_name = ?";
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 	        stmt.setString(1, username);
 	        try (var rs = stmt.executeQuery()) {
@@ -94,7 +94,7 @@ public class RegisterService {
 	        throw new SQLException("Database connection is not available.");
 	    }
 
-	    String query = "SELECT COUNT(*) FROM user WHERE userEmail = ?";
+	    String query = "SELECT COUNT(*) FROM user WHERE user_email = ?";
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 	        stmt.setString(1, email);
 	        try (var rs = stmt.executeQuery()) {

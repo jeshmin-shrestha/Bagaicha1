@@ -218,8 +218,8 @@ public class AdminProductService {
     }
     public List<UserModel> getAllUsers() {
         List<UserModel> users = new ArrayList<>();
-        String query = "SELECT user_id, fullName, userName, userEmail, userPhoneNo, " +
-                       "userRole, userAddress, image FROM user"; // Fixed column & table names
+        String query = "SELECT user_id, full_name, user_name, user_email, user_phone_no, " +
+                       "user_role, user_address, image FROM user"; // Fixed column & table names
         
         System.out.println("[DEBUG] Executing query: " + query);
         
@@ -234,12 +234,12 @@ public class AdminProductService {
                 while (rs.next()) {
                     UserModel user = new UserModel();
                     user.setUserId(rs.getInt("user_id"));
-                    user.setFullName(rs.getString("fullName"));  // Matches database
-                    user.setUserName(rs.getString("userName"));  // Matches database
-                    user.setUserEmail(rs.getString("userEmail")); // Matches database
-                    user.setUserPhoneNo(rs.getString("userPhoneNo")); // Matches database
-                    user.setUserRole(rs.getString("userRole"));
-                    user.setUserAddress(rs.getString("userAddress"));
+                    user.setFullName(rs.getString("full_name"));  // Matches database
+                    user.setUserName(rs.getString("user_name"));  // Matches database
+                    user.setUserEmail(rs.getString("user_email")); // Matches database
+                    user.setUserPhoneNo(rs.getString("user_phone_no")); // Matches database
+                    user.setUserRole(rs.getString("user_role"));
+                    user.setUserAddress(rs.getString("user_address"));
                     user.setImage(rs.getString("image"));
                     
                     users.add(user);

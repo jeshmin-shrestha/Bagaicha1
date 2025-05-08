@@ -44,14 +44,14 @@ public class LoginService {
 			return null;
 		}
 
-		String query = "SELECT userName, userPassword FROM user WHERE userName = ?";
+		String query = "SELECT user_name, user_password FROM user WHERE user_name = ?";
 		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 			stmt.setString(1, userModel.getUserName());
 			ResultSet result = stmt.executeQuery();
 
 			if (result.next()) {
-				String dbUsername = result.getString("userName");
-	            String dbPassword = result.getString("userPassword");
+				String dbUsername = result.getString("user_name");
+	            String dbPassword = result.getString("user_password");
 	            
 	            System.out.println("DEBUG - Stored encrypted password: " + dbPassword);
 				return validatePassword(result, userModel);
@@ -74,8 +74,8 @@ public class LoginService {
 	 * @throws SQLException if a database access error occurs
 	 */
 	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
-		String dbUsername = result.getString("userName");
-		String dbPassword = result.getString("userPassword");
+		String dbUsername = result.getString("user_name");
+		String dbPassword = result.getString("user_password");
 
 		return dbUsername.equals(userModel.getUserName())
 				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getUserPassword());
@@ -83,7 +83,7 @@ public class LoginService {
 	
 	public UserModel getUserDetails(String username) {
 	    UserModel user = null;
-	    String query = "SELECT * FROM user WHERE userName = ?";
+	    String query = "SELECT * FROM user WHERE user_name = ?";
 	    
 	    try (Connection conn = DbConfig.getDbConnection();
 	         PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -94,13 +94,13 @@ public class LoginService {
 	        if (rs.next()) {
 	            user = new UserModel();
 	            user.setUserId(rs.getInt("user_id"));
-	            user.setFullName(rs.getString("fullName"));
-	            user.setUserName(rs.getString("userName"));
-	            user.setUserEmail(rs.getString("userEmail"));
-	            user.setUserPhoneNo(rs.getString("userPhoneNo"));
-	            user.setUserAddress(rs.getString("userAddress"));
+	            user.setFullName(rs.getString("full_name"));
+	            user.setUserName(rs.getString("user_name"));
+	            user.setUserEmail(rs.getString("user_email"));
+	            user.setUserPhoneNo(rs.getString("user_phone_no"));
+	            user.setUserAddress(rs.getString("user_address"));
 	            user.setImage(rs.getString("image"));
-	            user.setUserRole(rs.getString("userRole"));
+	            user.setUserRole(rs.getString("user_role"));
 	            // Add all other fields
 	        }
 	    } catch (SQLException | ClassNotFoundException e) {
@@ -121,13 +121,13 @@ public class LoginService {
 	        return false;
 	    }
 
-	    String query = "SELECT userPassword FROM user WHERE userName = ?";
+	    String query = "SELECT user_password FROM user WHERE user_name = ?";
 	    try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
 	        stmt.setString(1, username);
 	        ResultSet result = stmt.executeQuery();
 
 	        if (result.next()) {
-	            String encryptedPassword = result.getString("userPassword");
+	            String encryptedPassword = result.getString("user_password");
 	            String decryptedPassword = PasswordUtil.decrypt(encryptedPassword, username);
 	            return decryptedPassword != null && decryptedPassword.equals(password);
 	        }

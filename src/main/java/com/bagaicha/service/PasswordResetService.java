@@ -25,7 +25,7 @@ public class PasswordResetService {
             return false;
         }
 
-        String query = "UPDATE user SET userPassword = ? WHERE userName = ?";
+        String query = "UPDATE user SET user_password = ? WHERE user_name = ?";
         try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
             String encryptedPassword = PasswordUtil.encrypt(username, newPassword);
             stmt.setString(1, encryptedPassword);

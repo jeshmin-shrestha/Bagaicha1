@@ -339,3 +339,60 @@
                 margin-bottom: 15px;
             }
         }
+        /* Add to your CSS */
+
+/* Improved Stats Cards Animation */
+.stat-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    z-index: 1;
+}
+
+/* Sparkline Charts for Stats */
+.stat-content {
+    position: relative;
+    z-index: 2;
+}
+
+.stat-content .trend {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.trend.up {
+    color: #28a745;
+}
+
+.trend.down {
+    color: #dc3545;
+}
+
+/* Improved Recent Activity Cards */
+.recent-card {
+    transition: transform 0.3s ease;
+}
+
+.recent-card:hover {
+    transform: translateY(-3px);
+}
+
+.recent-item {
+    transition: background-color 0.2s ease;
+}
+
+.recent-item:hover {
+    background-color: rgba(255,255,255,0.2);
+}

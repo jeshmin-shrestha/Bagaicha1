@@ -56,15 +56,16 @@ public class UpdateProfileService {
 		}
 
 		// Change the SQL query to match your exact column names
-		String updateSQL = "UPDATE user SET fullName = ?, userName = ?, userEmail = ?, "
-				+ "userPhoneNo = ?, userAddress = ? WHERE user_id = ?";
+		String updateSQL = "UPDATE `user` SET full_name = ?, user_name = ?, user_email = ?, "
+				+ "user_phone_no = ?, user_address = ? WHERE user_id = ?";
+
 		System.out.println("Prepared SQL: " + updateSQL);
 		System.out.println("Parameters:");
-		System.out.println("1. fullName: " + user.getFullName());
-		System.out.println("2. userName: " + user.getUserName());
-		System.out.println("3. userEmail: " + user.getUserEmail());
-		System.out.println("4. userPhoneNo: " + user.getUserPhoneNo());
-		System.out.println("5. userAddress: " + user.getUserAddress());
+		System.out.println("1. full_name: " + user.getFullName());
+		System.out.println("2. user_name: " + user.getUserName());
+		System.out.println("3. user_email: " + user.getUserEmail());
+		System.out.println("4. user_phone_no: " + user.getUserPhoneNo());
+		System.out.println("5. user_address: " + user.getUserAddress());
 		System.out.println("6. user_id: " + user.getUserId());
 
 		try (PreparedStatement preparedStatement = dbConn.prepareStatement(updateSQL)) {
