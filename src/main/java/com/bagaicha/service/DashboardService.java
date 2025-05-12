@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bagaicha.config.DbConfig;
 
@@ -60,5 +62,26 @@ public class DashboardService {
             e.printStackTrace();
         }
         return names;
+    }
+    public List<Map<String, Object>> getTopCategories() {
+        List<Map<String, Object>> categories = new ArrayList<>();
+        String query = "SELECT c.category_name, COUNT(p.plant_id) AS plant_count " +
+                       "FROM category c LEFT JOIN plant p ON c.category_id = p.category_id " +
+                       "GROUP BY c.category_id ORDER BY plant_count DESC LIMIT 5";
+        
+        try (Connection conn = DbConfig.getDbConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Map<String, Object> category = new HashMap<>();
+                category.put("name", rs.getString("category_name"));
+                category.put("count", rs.getInt("plant_count"));
+                categories.add(category);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 }

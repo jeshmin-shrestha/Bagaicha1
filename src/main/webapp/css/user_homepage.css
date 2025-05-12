@@ -44,7 +44,7 @@ body {
         
         .welcome-content {
             max-width: 60%;
-            height:200px;
+            height:250px;
             z-index: 2;
             position: relative;
             padding:40px;

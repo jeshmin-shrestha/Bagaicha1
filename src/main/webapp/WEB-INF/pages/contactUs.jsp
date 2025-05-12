@@ -47,10 +47,10 @@
     <p style="margin-bottom: 25px; color: #2c6e49; font-weight: 500;">
         One email. Once a month. Everything you need to grow better.
     </p>
-     <form action="subscribe.jsp" method="post" class="subscribe-form">
+     <form method="post" action="ContactServlet" class="subscribe-form">
                     <div class="input-wrapper">
                         <input type="email" name="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
+                        <button type="submit" class="submit-btn">Subscribe</button>
                     </div>
                 </form>
     <p style="font-size: 0.8rem; margin-top: 15px; color: #333;">

@@ -25,7 +25,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
           
@@ -43,7 +43,7 @@
             border-radius: 20px;
             padding: 30px;
             margin: 30px auto;
-            max-width: 1200px;
+            max-width: 1700px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(44, 110, 73, 0.2);
@@ -395,4 +395,54 @@
 
 .recent-item:hover {
     background-color: rgba(255,255,255,0.2);
+}
+/* Category List Styles */
+/* Category List Styles */
+.category-list {
+    margin-top: 20px;
+    padding: 0;
+    list-style-type: none; /* Remove default list styles */
+    max-width: 600px; /* Set max width for better readability */
+    margin-left: auto;
+    margin-right: auto; /* Center the category list */
+}
+
+/* Category Item Styles */
+/* Category List Styles */
+.category-list {
+    margin-top: 20px;
+    padding: 0;
+    list-style-type: none;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Category Item Styles */
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+     background-color: rgba(255,255,255,0.2);
+}
+
+/* Category Name Styles */
+.category-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1em;
+    flex: 1; /* Allow the category name to take up remaining space */
+}
+
+/* Category Count Styles */
+.category-count {
+    color: #7f8c8d;
+    font-size: 0.95em;
+    align-self: center;
+    margin-left: 30px; /* Adds space between the name and count */
 }

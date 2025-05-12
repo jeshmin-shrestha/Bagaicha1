@@ -19,10 +19,9 @@ public class UserProductService {
 	        System.out.println("DEBUG: Connection successful: " + connection);
 	        
 	        try (PreparedStatement statement = connection.prepareStatement(query)) {
-	            System.out.println("DEBUG: Executing query: " + query);
 	            
 	            try (ResultSet resultSet = statement.executeQuery()) {
-	                System.out.println("DEBUG: Query executed, checking results...");
+	                
 	                
 	                if (!resultSet.isBeforeFirst()) {
 	                    System.out.println("DEBUG: ResultSet is empty - no rows returned");

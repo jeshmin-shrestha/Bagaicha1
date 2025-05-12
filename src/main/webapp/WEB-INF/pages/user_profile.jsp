@@ -141,9 +141,12 @@
 						<a href="${pageContext.request.contextPath}/passwordReset" class="btn btn-change-password">
     <i class="fas fa-key"></i> Change Password
 </a>
-						<button type="button" class="btn btn-logout">
-							<i class="fas fa-sign-out-alt"></i> Log out
-						</button>
+						<a href="${pageContext.request.contextPath}/logout"
+   class="btn btn-logout"
+   onclick="return confirm('Do you really want to logout?');">
+    <i class="fas fa-sign-out-alt"></i> Log out
+</a>
+
 					</div>
 				</form>
 			</div>

@@ -40,9 +40,9 @@ public class UpdateProfileService {
 	}
 
 	/**
-	 * Updates student information in the database.
+	 * Updates user information in the database.
 	 * 
-	 * @param student The StudentModel object containing the updated student data.
+	 * @param user The UserModel object containing the updated user data.
 	 * @return Boolean indicating the success of the update operation. Returns null
 	 *         if there is a connection error or an exception occurs.
 	 */

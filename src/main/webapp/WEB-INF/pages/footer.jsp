@@ -5,35 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-           <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
-    
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
 </head>
 <body>
     <footer class="footer">
-    
         <div class="footer-container">
             <div class="footer-logo">
                 <img src="resources/images/system/logo1.png" alt="Bagaicha Logo">
-                
             </div>
 
             <div class="footer-nav">
                 <h3 class="footer-section-title">Navigation</h3>
                 <ul>
-                    <li>  <a href="/Bagaicha/home">Home</a></li>
+                    <li><a href="/Bagaicha/home">Home</a></li>
                     <li>
-<c:choose>
-    <c:when test="${role == 'admin'}">
-        <a href="${pageContext.request.contextPath}/adminProduct">Plant</a>
-    </c:when>
-    <c:when test="${role == 'user'}">
-        <a href="${pageContext.request.contextPath}/productList">Plant</a>
-    </c:when>
-    <c:otherwise>
-        <a href="${pageContext.request.contextPath}/home">Plant</a>
-    </c:otherwise>
-    </c:choose></li>
-                   
+                        <c:choose>
+                            <c:when test="${role == 'admin'}">
+                                <a href="${pageContext.request.contextPath}/adminProduct">Plant</a>
+                            </c:when>
+                            <c:when test="${role == 'user'}">
+                                <a href="${pageContext.request.contextPath}/productList">Plant</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/home">Plant</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
                     <li><a href="/Bagaicha/about">About Us</a></li>
                     <li><a href="/Bagaicha/contact">Contact Us</a></li>
                     <li><a href="/Bagaicha/profile">Profile</a></li>
@@ -54,48 +51,44 @@
                 </div>
             </div>
 
-   <div class="footer-subscribe">
-    <h3 class="footer-section-title">Join Our Newsletter</h3>
-    <p>Subscribe for updates and promotions</p>
-    <form id="subscribeForm" class="subscribe-form">
-        <div class="input-wrapper">
-            <input type="email" id="emailInput" name="email" placeholder="jeshmin@gmail.com" required>
-            <button type="submit">Subscribe</button>
-        </div>
-    </form>
-</div>
-
-<script>
-document.getElementById('subscribeForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent form submission
-    
-    const email = document.getElementById('emailInput').value;
-    
-    // Basic email validation
-    if (!email.includes('@') || !email.includes('.')) {
-        alert('Please enter a valid email address');
-        return;
-    }
-    
-    // Check if it's a Gmail address (optional)
-    if (email.endsWith('@gmail.com') || email.endsWith('@googlemail.com')) {
-        alert('Thank you for subscribing with your Gmail!');
-    } else {
-        alert('Thank you for subscribing!');
-    }
-    
-    // Clear the form
-    document.getElementById('emailInput').value = '';
-});
-</script>
-
+            <div class="footer-subscribe">
+                <h3 class="footer-section-title">Join Our Newsletter</h3>
+                <p>Subscribe for updates and promotions</p>
+                <form id="subscribeForm" class="subscribe-form">
+                    <div class="input-wrapper">
+                        <input type="email" id="emailInput" name="email" placeholder="jeshmin@gmail.com" required>
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- Closing footer-container div -->
 
         <div class="footer-bottom">
-            <p>&copy; 2023 Bagaicha. All rights reserved. | <a href="#" style="color: rgba(255, 255, 255, 0.7);">Privacy Policy</a> | <a href="#" style="color: rgba(255, 255, 255, 0.7);">Terms of Service</a></p>
+            <p>&copy; 2023 Bagaicha. All rights reserved. | 
+               <a href="#" style="color: rgba(255, 255, 255, 0.7);">Privacy Policy</a> | 
+               <a href="#" style="color: rgba(255, 255, 255, 0.7);">Terms of Service</a>
+            </p>
         </div>
     </footer>
-    
 
+    <script>
+    document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        
+        if (!email.includes('@') || !email.includes('.')) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        
+        if (email.endsWith('@gmail.com') || email.endsWith('@googlemail.com')) {
+            alert('Thank you for subscribing with your Gmail!');
+        } else {
+            alert('Thank you for subscribing!');
+        }
+        
+        document.getElementById('emailInput').value = '';
+    });
+    </script>
 </body>
-
 </html>

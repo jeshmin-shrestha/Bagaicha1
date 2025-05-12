@@ -73,11 +73,12 @@
         <input type="text" class="search-input" name="search" placeholder="Search plants..." required>
         <button type="submit" class="search-btn">
             <i class="fas fa-search"></i>
+            
         </button>
+        
+        
     </form>
-    <button class="btn btn-outline">
-        <i class="fas fa-sort"></i> Sort By
-    </button>
+    
 </div>
 
       <!-- Plants Gallery Section -->

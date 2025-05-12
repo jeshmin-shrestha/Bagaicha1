@@ -38,7 +38,7 @@
         <i class="fas fa-search"></i>
     </button><br>
     <c:if test="${not empty searchTerm}">
-        <a href="${pageContext.request.contextPath}/adminProduct" style="  bbackground: #ddd;
+        <a href="${pageContext.request.contextPath}/adminProduct" style=" 
     border: none;
     padding: 8px 12px;
     margin-left: 5px;
@@ -49,9 +49,7 @@
 </form>
 
                     </div>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-sort"></i> Sort By
-                    </button>
+                    
                 </div>
             </div>
            

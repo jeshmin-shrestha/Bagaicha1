@@ -64,12 +64,12 @@
                     
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" name="newPassword" required minlength="8">
+                        <input type="password" id="newPassword" name="newPassword" >
                     </div>
                     
                     <div class="form-group">
                         <label for="confirmPassword">Confirm New Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8">
+                        <input type="password" id="confirmPassword" name="confirmPassword">
                     </div>
                     
                     <button type="submit" class="btn-submit">Change Password</button>

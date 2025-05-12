@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import com.bagaicha.service.DashboardService;
 
 /**
@@ -39,6 +38,7 @@ public class DashboardController extends HttpServlet {
         request.setAttribute("totalCategories", totalCategories);
         request.setAttribute("recentPlants", dashboardService.getRecentPlants());
         request.setAttribute("recentUsers", dashboardService.getRecentUsers());
+        request.setAttribute("topCategories", dashboardService.getTopCategories());
         request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
     }
 }
