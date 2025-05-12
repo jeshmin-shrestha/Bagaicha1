@@ -5,6 +5,7 @@ import java.util.Enumeration;
 
 import com.bagaicha.model.UserModel;
 import com.bagaicha.service.UpdateProfileService;
+import com.bagaicha.util.ValidationUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,9 +30,40 @@ public class UpdateUserProfileController extends HttpServlet {
 		}
 
 	
+		// Get form parameters
+	    int userId = Integer.parseInt(request.getParameter("userId"));
+	    String fullName = request.getParameter("fullName");
+	    String userName = request.getParameter("username");
+	    String email = request.getParameter("email");
+	    String phone = request.getParameter("phone");
+	    String address = request.getParameter("address");
+		// === VALIDATION ===
+	    if (ValidationUtil.isNullOrEmpty(fullName) || !ValidationUtil.isValidName(fullName)) {
+	        response.sendRedirect("profile?error=invalid_fullname");
+	        return;
+	    }
+
+	    if (ValidationUtil.isNullOrEmpty(userName) || !ValidationUtil.isAlphanumericStartingWithLetter(userName)) {
+	        response.sendRedirect("profile?error=invalid_username");
+	        return;
+	    }
+
+	    if (!ValidationUtil.isValidEmail(email)) {
+	        response.sendRedirect("profile?error=invalid_email");
+	        return;
+	    }
+
+	    if (!ValidationUtil.isValidPhoneNumber(phone)) {
+	        response.sendRedirect("profile?error=invalid_phone");
+	        return;
+	    }
+
+	    if (!ValidationUtil.isValidAddress(address)) {
+	        response.sendRedirect("profile?error=invalid_address");
+	        return;
+	    }
 
 
-		int userId = Integer.parseInt(request.getParameter("userId"));
 
 		UserModel updatedUser = new UserModel();
 		updatedUser.setUserId(userId); // from form, not session

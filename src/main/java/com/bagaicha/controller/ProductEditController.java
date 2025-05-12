@@ -159,7 +159,7 @@ public class ProductEditController extends HttpServlet {
     }
     private PlantModel createPlantFromRequest(HttpServletRequest request) throws IOException, ServletException {
         PlantModel plant = new PlantModel();
-        
+      
         if (request.getParameter("plantId") != null && !request.getParameter("plantId").isEmpty()) {
             plant.setPlantId(Integer.parseInt(request.getParameter("plantId")));
         }
@@ -194,7 +194,6 @@ public class ProductEditController extends HttpServlet {
             plant.setCategoryId(Integer.parseInt(request.getParameter("plantCategory")));
         }
         
-        // Handle image upload if needed
         return plant;
     }
     

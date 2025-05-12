@@ -3,6 +3,7 @@ package com.bagaicha.controller;
 import com.bagaicha.service.LoginService;
 import com.bagaicha.service.PasswordResetService;
 import com.bagaicha.util.SessionUtil;
+import com.bagaicha.util.ValidationUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -39,6 +40,10 @@ public class PasswordResetController extends HttpServlet {
         // Handle missing fields
         if (username == null || oldPassword == null || newPassword == null || confirmPassword == null) {
             request.setAttribute("error", "empty_password");
+        }
+     // Validate new password format
+        else if (!ValidationUtil.isValidPassword(newPassword)) {
+            request.setAttribute("error", "weak_password");
         }
         // Handle password mismatch
         else if (!newPassword.equals(confirmPassword)) {

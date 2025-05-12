@@ -29,16 +29,36 @@
 		<%
 		}
 		%>
-
-		<%
-		if (request.getParameter("error") != null) {
-		%>
-		<div class="message error">
-			<%="update_failed".equals(request.getParameter("error")) ? "Failed to update profile. Please try again." : ""%>
-		</div>
-		<%
-		}
-		%>
+<%-- General or specific error message --%>
+<% 
+    String errorParam = request.getParameter("error");
+    if (errorParam != null) {
+        String errorMsg = "";
+        switch (errorParam) {
+            case "invalid_fullname":
+                errorMsg = "Full name must be at least 3 characters.";
+                break;
+            case "invalid_email":
+                errorMsg = "Invalid email format.";
+                break;
+            case "invalid_address":
+                errorMsg = "Address must not be empty.";
+                break;
+            case "invalid_phone":
+                errorMsg = "Phone number must be between 7 to 15 digits.";
+                break;
+            case "update_failed":
+                errorMsg = "Failed to update profile. Please try again.";
+                break;
+            default:
+                errorMsg = "Unknown error occurred.";
+        }
+%>
+    <div class="message error"><%= errorMsg %></div>
+<%
+    }
+%>
+		
 		<div class="profile-card">
 			<div class="profile-header">
 				<img
@@ -178,8 +198,37 @@
 	    
 	    // Form submission
 	    form.addEventListener('submit', function(e) {
-	        console.log("Form submitting...");
-	        // Let it submit normally
+	        let isValid = true;
+	        messageContainer.textContent = ""; // reset message
+
+	        // Basic validations
+	        const fullName = document.getElementById('fullName').value.trim();
+	        const email = document.getElementById('email').value.trim();
+	        const address = document.getElementById('address').value.trim();
+	        const phone = document.getElementById('phone').value.trim();
+
+	        const phoneRegex = /^[0-9]{7,15}$/;
+	        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	        if (fullName === "") {
+	            isValid = false;
+	            messageContainer.textContent = "Full name cannot be empty.";
+	        } else if (!emailRegex.test(email)) {
+	            isValid = false;
+	            messageContainer.textContent = "Please enter a valid email address.";
+	        } else if (address === "") {
+	            isValid = false;
+	            messageContainer.textContent = "Address cannot be empty.";
+	        } else if (!phoneRegex.test(phone)) {
+	            isValid = false;
+	            messageContainer.textContent = "Enter a valid phone number (10 digits).";
+	        }
+
+	        if (!isValid) {
+	            e.preventDefault(); // prevent form submission
+	            messageContainer.style.display = 'block';
+	            window.scrollTo({ top: 0, behavior: 'smooth' });
+	        }
 	    });
 	});
 </script>

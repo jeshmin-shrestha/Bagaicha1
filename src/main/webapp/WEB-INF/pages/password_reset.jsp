@@ -37,6 +37,8 @@
                     <c:when test="${requestScope.error eq 'password_mismatch'}">New passwords don't match</c:when>
                     <c:when test="${requestScope.error eq 'current_incorrect'}">Current password is incorrect</c:when>
                     <c:when test="${requestScope.error eq 'update_failed'}">Failed to update password</c:when>
+                    <c:when test="${requestScope.error eq 'weak_password'}">Password must include uppercase, number, and symbol</c:when>
+                    
                     <c:otherwise>An error occurred</c:otherwise>
                 </c:choose>
             </div>

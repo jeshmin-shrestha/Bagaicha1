@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import com.bagaicha.model.UserModel;
 import com.bagaicha.service.LoginService;
-import com.bagaicha.service.PasswordResetService;
-import com.bagaicha.service.UpdateProfileService;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -57,37 +54,6 @@ public class UserProfileController extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        UserModel currentUser = (UserModel) session.getAttribute("user");
-        if (currentUser == null) {
-            response.sendRedirect("login"); // Redirect to login if no user is logged in
-            return;
-        }
-
-        UserModel updatedUser = new UserModel();
-        updatedUser.setFullName(request.getParameter("fullName"));
-        updatedUser.setUserName(request.getParameter("username"));
-        updatedUser.setUserPhoneNo(request.getParameter("phone"));
-        updatedUser.setUserEmail(currentUser.getUserEmail()); // assuming email is unique identifier
-        updatedUser.setUserPassword(currentUser.getUserPassword()); // reuse password
-
-        UpdateProfileService userService = new UpdateProfileService(); // Renamed to UserService for clarity
-        boolean success = userService.updateUserInfo(updatedUser);
-
-        if (success) {
-            session.setAttribute("user", updatedUser); // update session
-            response.sendRedirect("profile?updated=true"); // Redirect to profile page with success message
-        } else {
-            request.setAttribute("error", "Failed to update profile.");
-            request.getRequestDispatcher("WEB-INF/pages/user_profile.jsp").forward(request, response); // Forward to the correct page
-        }
-        
-        System.out.println("Received update request:");
-        System.out.println("Full Name: " + request.getParameter("fullName"));
-        System.out.println("Username: " + request.getParameter("username"));
-        System.out.println("Email: " + request.getParameter("email"));
-        System.out.println("Phone: " + request.getParameter("phone"));
-        System.out.println("Address: " + request.getParameter("address"));
+    	//this servlet only handles GET for profile display
     }
 }
