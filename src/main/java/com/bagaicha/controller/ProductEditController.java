@@ -113,7 +113,7 @@ public class ProductEditController extends HttpServlet {
         if (success) {
         	session.setAttribute("popupMessage", "Plant updated successfully!");
             session.setAttribute("popupType", "success");
-            response.sendRedirect("productEdit?plantId=" + plant.getPlantId() + "&success=true");
+            response.sendRedirect("productEdit?plantId=" + plant.getPlantId() + "&action=updated");
         } else {
         	session.setAttribute("popupMessage", "Failed to update plant");
             session.setAttribute("popupType", "error");
@@ -132,7 +132,7 @@ public class ProductEditController extends HttpServlet {
         if (success) {
             session.setAttribute("popupMessage", "Plant added successfully!");
             session.setAttribute("popupType", "success");
-            response.sendRedirect("adminProduct");
+            response.sendRedirect("adminProduct?action=added");
         } else {
             session.setAttribute("popupMessage", "Failed to add plant");
             session.setAttribute("popupType", "error");
@@ -150,8 +150,8 @@ public class ProductEditController extends HttpServlet {
         if (success) {
         	session.setAttribute("popupMessage", "Plant deleted successfully!");
             session.setAttribute("popupType", "success");
-            response.sendRedirect("productList?success=delete_success");
-        } else {
+            response.sendRedirect("adminProduct?action=deleted");
+            } else {
         	session.setAttribute("popupMessage", "Failed to delete plant");
             session.setAttribute("popupType", "error");
             response.sendRedirect("productEdit?plantId=" + plantId + "&error=delete_failed");

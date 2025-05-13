@@ -88,24 +88,26 @@
     }
 
     // Initialize everything when page loads
-    window.onload = function() {
-        initEditMode();
-        
-        <c:if test="${not empty sessionScope.popupMessage}">
-            showPopup("${sessionScope.popupMessage}", "${sessionScope.popupType}");
-            <c:remove var="popupMessage" scope="session"/>
-            <c:remove var="popupType" scope="session"/>
-        </c:if>
-    };
-
-    // Form submission logging
-    document.querySelector('form').addEventListener('submit', function(e) {
-        console.log("Submitting form with:", {
-            plantId: this.plantId.value,
-            action: document.activeElement.value,
-            plantName: this.plantName.value
+  window.onload = function() {
+    initEditMode();
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            console.log("Submitting form with:", {
+                plantId: this.plantId.value,
+                action: document.activeElement.value,
+                plantName: this.plantName.value
+            });
         });
-    });
+    }
+
+    <c:if test="${not empty sessionScope.popupMessage}">
+        showPopup("${sessionScope.popupMessage}", "${sessionScope.popupType}");
+        <c:remove var="popupMessage" scope="session"/>
+        <c:remove var="popupType" scope="session"/>
+    </c:if>
+};
+
  
     function handleImageError(img) {
         console.error("Failed to load image: " + img.src);
@@ -132,7 +134,30 @@
     <div class="main-container">
     <!-- Add this with your other message displays -->
 
-        
+        	<%
+    String action = request.getParameter("action");
+    if (action != null) {
+        switch (action) {
+            case "added":
+%>
+                <div class="message success">Plant added successfully!</div>
+<%
+                break;
+            case "updated":
+%>
+                <div class="message success">Plant updated successfully!</div>
+<%
+                break;
+            case "deleted":
+%>
+                <div class="message success">Plant deleted successfully!</div>
+<%
+                break;
+        }
+    }
+%>
+
+
         <div class="edit-card">
             <div class="edit-header">
                 <h3>${not empty plant.plantId ? 'Plant Details' : 'Add New Plant'}</h3>

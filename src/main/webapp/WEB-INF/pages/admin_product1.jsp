@@ -22,6 +22,28 @@
             </div>
             <img src="${pageContext.request.contextPath}/resources/images/system/robot_icon.png" alt="Plant Care Assistant" class="bot-icon">
         </div>
+  	<%
+    String action = request.getParameter("action");
+    if (action != null) {
+        switch (action) {
+            case "added":
+%>
+                <div class="message success">Plant added successfully!</div>
+<%
+                break;
+            case "updated":
+%>
+                <div class="message success">Plant updated successfully!</div>
+<%
+                break;
+            case "deleted":
+%>
+                <div class="message success">Plant deleted successfully!</div>
+<%
+                break;
+        }
+    }
+%>
 
         <!-- Plant Table Section -->
         <section class="plant-section">
