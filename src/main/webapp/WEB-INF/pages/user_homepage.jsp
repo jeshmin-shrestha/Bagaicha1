@@ -130,7 +130,7 @@
                     <div class="cta-content">
                         <h3>Learn More  About Us?</h3>
                         
-                        <a href="about.jsp" class="see-more-btn">Learn More</a>
+                        <a href="${pageContext.request.contextPath}/about" class="see-more-btn">Learn More</a>
                     </div>
                 </div>
                 
@@ -142,7 +142,7 @@
                     <div class="cta-content">
                         <h3>Leave us a feedback</h3>
                         
-                        <a href="subscribe.jsp" class="see-more-btn">Send us feedback</a>
+                        <a href="${pageContext.request.contextPath}/contact"" class="see-more-btn">Send us feedback</a>
                     </div>
                 </div>
             </div>

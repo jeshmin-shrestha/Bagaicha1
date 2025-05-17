@@ -17,8 +17,10 @@
 
     <!-- Main Content -->
     <div class="about-container">
+    <h2> Our Missions</h2>
         <!-- Mission Icons Section -->
         <section class="mission-icons">
+        
 <div class="mission-icon">
     <img src="resources/images/system/trackplant.png" alt="Track Plants Icon">
     <h3>Track Plants</h3>
@@ -68,23 +70,23 @@ To bridge the gap between people and plants — using smart tools, local knowled
             <div class="reviews-container">
                 <div class="review-card">
                     <p>"Bagaicha's plants transformed my apartment balcony into a green paradise. Their Kathmandu-specific advice was invaluable!"</p>
-                    <div class="reviewer">— Asha, Kathmandu</div>
+                    <div class="reviewer">— Kim Jennie, Kathmandu</div>
                 </div>
                 <div class="review-card">
                     <p>"The quality exceeds anything I've found elsewhere. My fiddle leaf fig from Bagaicha is thriving after 2 years!"</p>
-                    <div class="reviewer">— Raj, Pokhara</div>
+                    <div class="reviewer">— Shah Rukh Khan, Pokhara</div>
                 </div>
                 <div class="review-card">
-                    <p>"Their workshop taught me everything about monsoon plant care. Now my garden flourishes year-round!"</p>
-                    <div class="reviewer">— Sunita, Lalitpur</div>
+                    <p>"Their app taught me everything about monsoon plant care. Now my garden flourishes year-round!"</p>
+                    <div class="reviewer">— Justin Bieber, Lalitpur</div>
                 </div>
                 <div class="review-card">
                     <p>"The monthly plant subscription brings me so much joy. Each delivery feels like a personal gift."</p>
-                    <div class="reviewer">— Anil, Bhaktapur</div>
+                    <div class="reviewer">— Selena Gomez, Bhaktapur</div>
                 </div>
                 <div class="review-card">
                     <p>"Customer service went above and beyond when my plant arrived damaged. They truly care!"</p>
-                    <div class="reviewer">— Priya, Dharan</div>
+                    <div class="reviewer">— Jeshmin Shrestha, Kathmandu</div>
                 </div>
             </div>
         </section>

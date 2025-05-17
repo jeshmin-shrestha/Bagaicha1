@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | Bagaicha</title>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/register.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css" />
 </head>
 <body>
 	<div class="left-panel"
@@ -73,7 +72,6 @@
 				</div>
 
 				<br>
-
 
 
 				<button type="submit" class="submit-btn">Login</button>

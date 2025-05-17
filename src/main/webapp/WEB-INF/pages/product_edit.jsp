@@ -60,32 +60,7 @@
             </c:otherwise>
         </c:choose>
     }
-    function showPopup(message, type) {
-        // Create popup element
-        const popup = document.createElement('div');
-        popup.className = `popup ${type}`;
-        popup.innerHTML = `
-            <div class="popup-content">
-                <span class="close-btn">&times;</span>
-                <p>${message}</p>
-            </div>
-        `;
-        
-        // Add to body
-        document.body.appendChild(popup);
-        
-        // Auto-close after 3 seconds
-        setTimeout(() => {
-            popup.style.opacity = '0';
-            setTimeout(() => popup.remove(), 300);
-        }, 3000);
-        
-        // Manual close
-        popup.querySelector('.close-btn').addEventListener('click', () => {
-            popup.style.opacity = '0';
-            setTimeout(() => popup.remove(), 300);
-        });
-    }
+
 
     // Initialize everything when page loads
   window.onload = function() {
@@ -134,7 +109,8 @@
     <div class="main-container">
     <!-- Add this with your other message displays -->
 
-        	<%
+
+	<%
     String action = request.getParameter("action");
     if (action != null) {
         switch (action) {
@@ -156,7 +132,6 @@
         }
     }
 %>
-
 
         <div class="edit-card">
             <div class="edit-header">

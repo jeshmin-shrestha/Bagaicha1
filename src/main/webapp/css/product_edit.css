@@ -345,18 +345,7 @@
 } /* THIS WAS THE MISSING CLOSING BRACE */
 
 /* Popup styles - MOVED OUTSIDE OF MEDIA QUERIES */
-.popup {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 20px;
-    border-radius: 5px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    z-index: 9999; /* Increased z-index */
-    transition: opacity 0.3s ease;
-    max-width: 300px;
-}
+
 .message {
 	padding: 15px;
 	margin: 10px 0;
@@ -374,40 +363,21 @@
 	color: #a94442;
 }
 
-.popup.success {
-    background-color: #4CAF50;
-}
-
-.popup.error {
-    background-color: #f44336;
-}
-
-.popup-content {
-    position: relative;
-}
-
-.popup .close-btn {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    cursor: pointer;
-    background: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.popup p {
-    margin: 0;
-    padding-right: 15px;
-}
-
+#popupMessage {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4CAF50; /* green for success */
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        z-index: 9999;
+        font-size: 16px;
+    }
+    .error {
+        background-color: #f44336 !important;
+    }
 /* Other media queries */
 @media (max-width: 768px) {
     .welcome-section {

@@ -185,7 +185,14 @@ input-wrapper {
     outline: none;
     border-color: var(--primary-green);
 }
-
+.success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
         /* Responsive Design */
        /* Enhance contact-header image responsiveness */
 @media (max-width: 1800px) {
