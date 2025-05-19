@@ -9,6 +9,7 @@ import java.util.Arrays;
 /**
  * Utility class for managing cookies in a web application.
  * Provides methods to add, retrieve, and delete cookies.
+ * @author Jeshmin Shrestha
  */
 public class CookieUtil {
 

@@ -13,7 +13,12 @@ import com.bagaicha.model.PlantModel;
 import com.bagaicha.service.AdminProductService;
 import com.bagaicha.util.ImageUtil;
 import com.bagaicha.util.ValidationUtil;
-
+/**
+ * ProductEditController handles CRUD operations for plants in the admin panel.
+ * It supports adding new plants, updating existing plants (including image upload),
+ * and deleting plants. It uses multipart configuration for image file handling.
+ * @author Jeshmin Shrestha
+ */
 @WebServlet(asyncSupported = true, urlPatterns = { "/productEdit" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
                 maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -22,7 +27,8 @@ public class ProductEditController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 	private final ImageUtil imageUtil = new ImageUtil();
 
-    private AdminProductService plantService;
+    @SuppressWarnings("unused")
+	private AdminProductService plantService;
 
     public ProductEditController() {
         this.plantService = new AdminProductService();

@@ -12,11 +12,32 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+/**
+ * Servlet implementation class UpdateUserProfileController
+ * 
+ * Handles POST requests to update the user profile information.
+ * It validates input parameters from the request, constructs a UserModel object,
+ * and calls the service layer to update the user data in the database.
+ * Depending on success or failure, redirects to the profile page with appropriate status messages.
+ * @author Jeshmin Shrestha
+ * 
+ */
 @WebServlet("/userUpdate")
 public class UpdateUserProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * Handles HTTP POST request to update user profile.
+	 * 
+	 * Validates the input parameters from the form. If any validation fails, 
+	 * redirects back to the profile page with an error message.
+	 * If validation passes, creates a UserModel object and calls UpdateProfileService
+	 * to update the user in the database.
+	 * 
+	 * @param request HttpServletRequest containing form data parameters
+	 * @param response HttpServletResponse used to redirect to profile page with status
+	 * @throws ServletException if servlet-specific error occurs
+	 * @throws IOException if an I/O error occurs during request handling
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

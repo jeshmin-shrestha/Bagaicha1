@@ -10,11 +10,24 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.util.List;
-
+/**
+ * AdminProductController handles HTTP GET requests for the admin product management page.
+ * It retrieves a list of all users and either all plants or searched plants based on a query,
+ * and forwards the data to the JSP for rendering.
+ *  @author Jeshmin Shrestha
+ */
 @WebServlet("/adminProduct")
 public class AdminProductController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    /**
+     * Handles GET requests by retrieving user and plant data for the admin product management page.
+     * If a search term is provided via query parameter, it filters the plant list accordingly.
+     *
+     * @param request  the HttpServletRequest object containing the client's request
+     * @param response the HttpServletResponse object used to respond to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs during request forwarding
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         

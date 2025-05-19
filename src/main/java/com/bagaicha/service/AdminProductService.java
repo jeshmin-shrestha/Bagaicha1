@@ -8,7 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class AdminProductService {
-
+	/**
+     * Retrieves all plants from the database.
+     *
+     * @return a list of all PlantModel objects
+     */
     public List<PlantModel> getAllPlants() {
         List<PlantModel> plants = new ArrayList<>();
 
@@ -41,6 +45,13 @@ public class AdminProductService {
 
         return plants;
     }
+    /**
+     * Retrieves a specific plant by its ID.
+     *
+     * @param plantId the ID of the plant to retrieve
+     * @return a PlantModel object if found, otherwise null
+     * @throws ClassNotFoundException if the database driver is not found
+     */
     public PlantModel getPlantById(int plantId) throws ClassNotFoundException {
         PlantModel plant = null;
         String sql = "SELECT * FROM plant WHERE plant_id = ?";
@@ -86,6 +97,13 @@ public class AdminProductService {
         }
         return plant;
     }
+    /**
+     * Adds a new plant to the database.
+     *
+     * @param plant the PlantModel object containing plant data to insert
+     * @return true if the plant is added successfully, false otherwise
+     * @throws ClassNotFoundException if the database driver is not found
+     */
     public boolean addPlant(PlantModel plant) throws ClassNotFoundException {
         String sql = "INSERT INTO plant (plant_name, scientific_name, soil_type, fertilizer_requirement, " +
                      "sunlight_requirement, blooming_season, water_frequency, care_description, " +
@@ -122,7 +140,13 @@ public class AdminProductService {
         }
         return false;
     }
-
+    /**
+     * Updates the details of an existing plant.
+     *
+     * @param plant the PlantModel object containing updated plant data
+     * @return true if the plant is updated successfully, false otherwise
+     * @throws ClassNotFoundException if the database driver is not found
+     */
     public boolean updatePlant(PlantModel plant) throws ClassNotFoundException {
         String sql = "UPDATE plant SET plant_name=?, scientific_name=?, soil_type=?, " +
                      "fertilizer_requirement=?, sunlight_requirement=?, blooming_season=?, " +
@@ -151,7 +175,13 @@ public class AdminProductService {
             return false;
         }
     }
-
+    /**
+     * Deletes a plant from the database by its ID.
+     *
+     * @param plantId the ID of the plant to delete
+     * @return true if the plant is deleted successfully, false otherwise
+     * @throws ClassNotFoundException if the database driver is not found
+     */
     public boolean deletePlant(int plantId) throws ClassNotFoundException {
         String sql = "DELETE FROM plant WHERE plant_id = ?";
         
@@ -167,6 +197,13 @@ public class AdminProductService {
             return false;
         }
     }
+    /**
+     * Searches for plants based on a search term.
+     * The term is checked in multiple columns including name, soil type, fertilizer, etc.
+     *
+     * @param searchTerm the keyword to search for
+     * @return a list of PlantModel objects matching the search term
+     */
  // Add this method to your AdminProductService class
     public List<PlantModel> searchPlants(String searchTerm) {
         List<PlantModel> plants = new ArrayList<>();
@@ -216,6 +253,11 @@ public class AdminProductService {
         System.out.println("Search results for '" + searchTerm + "': " + plants.size() + " plants found");
         return plants;
     }
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return a list of UserModel objects representing all users
+     */
     public List<UserModel> getAllUsers() {
         List<UserModel> users = new ArrayList<>();
         String query = "SELECT user_id, full_name, user_name, user_email, user_phone_no, " +

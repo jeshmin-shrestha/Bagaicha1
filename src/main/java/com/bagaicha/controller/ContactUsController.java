@@ -6,11 +6,26 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+/**
+ * ContactUsController handles GET and POST requests for the Contact Us page.
+ * 
+ * GET requests load the contact page with optional success or subscription status.
+ * POST requests handle either message form submissions or email subscriptions.
+ *  @author Jeshmin Shrestha
+ */
 
 @WebServlet("/contact")
 public class ContactUsController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    /**
+     * Handles GET requests by forwarding the request to the contact_us.jsp page.
+     * Optionally includes query parameters for success messages.
+     *
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs during request forwarding
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -22,9 +37,17 @@ public class ContactUsController extends HttpServlet {
         request.setAttribute("subscribed", subscribed);
 
         // Forward to the actual JSP
-        request.getRequestDispatcher("/WEB-INF/pages/contactUs.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/contact_us.jsp").forward(request, response);
     }
-
+    /**
+     * Handles POST requests for form submissions on the contact page.
+     * Determines if the submission is a message or a subscription based on the formType parameter.
+     *
+     * @param request  the HttpServletRequest object that contains the form data submitted by the client
+     * @param response the HttpServletResponse object used to redirect the client based on form type
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs during redirection
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

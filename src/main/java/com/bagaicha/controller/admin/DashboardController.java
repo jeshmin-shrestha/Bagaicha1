@@ -15,6 +15,7 @@ import com.bagaicha.service.DashboardService;
  * information, handle updates, and manage student data. It forwards requests to
  * appropriate JSP pages or handles POST actions based on the request
  * parameters.
+ *  @author Jeshmin Shrestha
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/dashboard" })
 public class DashboardController extends HttpServlet {

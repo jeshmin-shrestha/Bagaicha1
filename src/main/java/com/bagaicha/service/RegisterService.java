@@ -9,9 +9,11 @@ import java.sql.SQLException;
 import com.bagaicha.config.DbConfig;
 import com.bagaicha.model.UserModel;
 
+
 /**
- * RegisterService handles the registration of new students. It manages database
- * interactions for student registration.
+ * RegisterService handles the registration of new users.
+ * It manages database interactions such as inserting user data
+ * and checking for duplicate usernames and emails.
  */
 public class RegisterService {
 
@@ -32,11 +34,11 @@ public class RegisterService {
 	}
 
 	/**
-	 * Registers a new user in the database.
-	 *
-	 * @param UserModel the user details to be registered
-	 * @return Boolean indicating the success of the operation
-	 */
+     * Registers a new user in the database.
+     *
+     * @param userModel the user details to be registered
+     * @return Boolean indicating the success of the operation (true if inserted, false if failed, null if no connection)
+     */
 	public Boolean addUser(UserModel userModel) {
 	   
 
@@ -73,6 +75,13 @@ public class RegisterService {
 	        return false; // Ensure it returns a boolean
 	    }
 	}
+	/**
+     * Checks if a username is already taken in the database.
+     *
+     * @param username the username to check
+     * @return true if the username exists, false otherwise
+     * @throws SQLException if database access fails
+     */
 	public boolean isUsernameTaken(String username) throws SQLException {
 	    if (dbConn == null) {
 	        throw new SQLException("Database connection is not available.");
@@ -89,6 +98,13 @@ public class RegisterService {
 	    }
 	    return false;
 	}
+	 /**
+     * Checks if an email is already registered in the database.
+     *
+     * @param email the email address to check
+     * @return true if the email exists, false otherwise
+     * @throws SQLException if database access fails
+     */
 	public boolean isEmailTaken(String email) throws SQLException {
 	    if (dbConn == null) {
 	        throw new SQLException("Database connection is not available.");

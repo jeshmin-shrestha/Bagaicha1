@@ -22,7 +22,22 @@ public class PlantModel {
 
     // Default constructor
     public PlantModel() {}
-
+    /**
+     * Constructs a PlantModel with all fields.
+     *
+     * @param plantId               the unique identifier of the plant
+     * @param plantName             the common name of the plant
+     * @param scientificName        the scientific name of the plant
+     * @param soilType              the preferred soil type
+     * @param fertilizerRequirement the fertilizer needs
+     * @param sunlightRequirement   the sunlight needs
+     * @param bloomingSeason        the season when the plant blooms
+     * @param waterFrequency        the watering frequency
+     * @param careDescription       the care instructions
+     * @param plantAddedDate        the date the plant was added
+     * @param imageUrl              the image URL of the plant
+     * @param categoryId            the ID of the category the plant belongs to
+     */
     // Full constructor
     public PlantModel(int plantId, String plantName, String scientificName, String soilType,
                       String fertilizerRequirement, String sunlightRequirement, String bloomingSeason,
@@ -61,10 +76,16 @@ public class PlantModel {
     }
 
     // Getters and Setters
+
+    /**
+     * @param plantId the plant ID to set
+     */
     public int getPlantId() {
         return plantId;
     }
-
+    /**
+     * @return the plant name
+     */
     public void setPlantId(int plantId) {
         this.plantId = plantId;
     }

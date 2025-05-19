@@ -19,9 +19,9 @@ public class LoginService {
 	private boolean isConnectionError = false;
 
 	/**
-	 * Constructor initializes the database connection. Sets the connection error
-	 * flag if the connection fails.
-	 */
+     * Constructor initializes the database connection.
+     * Sets the connection error flag if the connection fails.
+     */
 	public LoginService() {
 		try {
 			dbConn = DbConfig.getDbConnection();
@@ -32,11 +32,11 @@ public class LoginService {
 	}
 
 	/**
-	 * Validates the user credentials against the database records.
-	 *
-	 * @param userModel the UserModel object containing user credentials
- * @return true if the credentials are valid, false otherwise; null if a connection error occurs
- */
+     * Validates the user credentials against the database records.
+     *
+     * @param userModel the UserModel object containing user credentials
+     * @return true if the credentials are valid, false if invalid, or null if a connection error occurs
+     */
 	public Boolean loginUser(UserModel userModel) {
 		
 		if (isConnectionError) {
@@ -65,14 +65,13 @@ public class LoginService {
 	}
 
 	/**
-	 * Validates the password retrieved from the database.
-	 *
-	 * @param result       the ResultSet containing the username and password from
-	 *                     the database
-	 * @param studentModel the StudentModel object containing user credentials
-	 * @return true if the passwords match, false otherwise
-	 * @throws SQLException if a database access error occurs
-	 */
+     * Validates the password retrieved from the database with the user input.
+     *
+     * @param result     the ResultSet containing user_name and user_password
+     * @param userModel  the UserModel object containing user input
+     * @return true if the passwords match, false otherwise
+     * @throws SQLException if a database access error occurs
+     */
 	private boolean validatePassword(ResultSet result, UserModel userModel) throws SQLException {
 		String dbUsername = result.getString("user_name");
 		String dbPassword = result.getString("user_password");
@@ -80,7 +79,12 @@ public class LoginService {
 		return dbUsername.equals(userModel.getUserName())
 				&& PasswordUtil.decrypt(dbPassword, dbUsername).equals(userModel.getUserPassword());
 	}
-	
+	 /**
+     * Retrieves full user details based on the username.
+     *
+     * @param username the username to look up
+     * @return UserModel object with all user details; null if not found or error occurs
+     */
 	public UserModel getUserDetails(String username) {
 	    UserModel user = null;
 	    String query = "SELECT * FROM user WHERE user_name = ?";
@@ -109,13 +113,13 @@ public class LoginService {
 	    return user;
 	    
 	}
-	/**
-	 * Verifies if the provided password matches the stored password for a given username.
-	 * 
-	 * @param username The username to verify
-	 * @param password The plain-text password to check
-	 * @return true if the password matches, false otherwise
-	 */
+	 /**
+     * Verifies if the provided password matches the stored encrypted password for the given username.
+     *
+     * @param username the username to verify
+     * @param password the plain-text password input
+     * @return true if the password matches the stored one; false otherwise
+     */
 	public boolean verifyPassword(String username, String password) {
 	    if (isConnectionError) {
 	        return false;

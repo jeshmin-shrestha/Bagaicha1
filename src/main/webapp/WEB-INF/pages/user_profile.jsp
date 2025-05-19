@@ -45,7 +45,7 @@
                 errorMsg = "Address must not be empty.";
                 break;
             case "invalid_phone":
-                errorMsg = "Phone number must be between 7 to 15 digits.";
+                errorMsg = "Phone number must be between 10 digits and starts with 98.";
                 break;
             case "update_failed":
                 errorMsg = "Failed to update profile. Please try again.";

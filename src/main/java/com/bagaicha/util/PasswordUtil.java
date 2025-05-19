@@ -56,7 +56,14 @@ public class PasswordUtil {
            	}
        		return null;
     }
-
+    /**
+     * Encrypts a user's password using AES-GCM with a key derived from the username.
+     *
+     * @param userName     The username used as the password for key derivation. This should be unique per user.
+     * @param userPassword The plain text password that needs to be encrypted.
+     * @return             A Base64 encoded string that contains the IV, salt, and encrypted password.
+     *                     Returns null if encryption fails.
+     */
     // return a base64 encoded AES encrypted text
     public static String encrypt(String userName, String userPassword){
     	try {
@@ -91,7 +98,13 @@ public class PasswordUtil {
 
     }
 
-    
+    /**
+     * Decrypts the encrypted password back to plain text using the username and embedded salt/IV.
+     *
+     * @param encryptedPassword The Base64 encoded encrypted password string that includes the IV and salt.
+     * @param username          The username used as the password for key derivation, must be the same used for encryption.
+     * @return                  The decrypted plain text password, or null if decryption fails.
+     */
     public static String decrypt(String encryptedPassword, String username) {
 		try {
 			byte[] decode = Base64.getDecoder().decode(encryptedPassword.getBytes(UTF_8));

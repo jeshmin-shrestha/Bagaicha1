@@ -40,6 +40,7 @@ import jakarta.servlet.http.Part;
  * RegisterController handles user registration requests and processes form
 
  * submissions. It also manages file uploads and account creation.
+ * @author Jeshmin Shrestha
 
  */
 

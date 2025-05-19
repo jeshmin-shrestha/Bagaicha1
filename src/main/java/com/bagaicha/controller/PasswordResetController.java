@@ -12,14 +12,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-
+/**
+ * PasswordResetController handles requests related to password change.
+ * It verifies the user's old password and applies validation rules
+ * before updating to a new password.
+ *  @author Jeshmin Shrestha
+ */
 @WebServlet("/passwordReset")
 public class PasswordResetController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final PasswordResetService passwordResetService = new PasswordResetService();
     private final LoginService loginService = new LoginService();
-
+    /**
+     * Handles GET requests by forwarding to the password reset JSP.
+     *
+     * @param request  the HttpServletRequest object
+     * @param response the HttpServletResponse object
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,6 +39,15 @@ public class PasswordResetController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/pages/password_reset.jsp").forward(request, response);
     }
 
+    /**
+     * Handles POST requests for password reset logic:
+     * validates input, verifies current password, and updates it if valid.
+     *
+     * @param request  the HttpServletRequest object
+     * @param response the HttpServletResponse object
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

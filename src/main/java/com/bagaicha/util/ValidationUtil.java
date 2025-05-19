@@ -4,9 +4,22 @@ import java.time.LocalDate;
 //import java.time.Period;
 import java.util.regex.Pattern;
 import jakarta.servlet.http.Part;
-
+/**
+ * Utility class for various input validations used across the Bagaicha application.
+ * <p>
+ * This class provides static methods to validate common user input such as names,
+ * emails, phone numbers, passwords, roles, addresses, dates, and file uploads.
+ * It centralizes validation logic to ensure consistency and maintainability.
+ * </p>
+ * 
+ * @author Jeshmin Shrestha
+ */
 public class ValidationUtil {
-
+	/**
+	 * Checks if a given string is null or empty after trimming.
+	 * @param value The string to check.
+	 * @return true if null or empty, false otherwise.
+	 */
 	// 1. Null or empty check
     public static boolean isNullOrEmpty(String value) {
         return value == null || value.trim().isEmpty();

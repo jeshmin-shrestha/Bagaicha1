@@ -22,11 +22,32 @@ public class UserModel {
  // Default constructor
     public UserModel() { }
  // Constructor for login
+    /**
+     * Constructor for login.
+     * 
+     * @param username the username of the user
+     * @param password the password of the user
+     */
     public UserModel(String username, String pasword) {
     	this.userName = username;
 		this.userPassword = pasword;
 	}
  // Full constructor
+    /**
+     * Full constructor.
+     * 
+     * @param userId the user's ID
+     * @param fullName the full name of the user
+     * @param userName the username
+     * @param userEmail the email of the user
+     * @param userPhoneNo the phone number of the user
+     * @param userPassword the password of the user
+     * @param userRole the role of the user (e.g., admin or user)
+     * @param userAddress the address of the user
+     * @param lastLogin the timestamp of the user's last login
+     * @param plant the plant associated with the user
+     * @param image the user's profile image URL
+     */
 	public UserModel(int userId, String fullName, String userName, String userEmail, String userPhoneNo,
 			String userPassword, String userRole, String userAddress, Timestamp lastLogin, PlantModel plant,String image) {
 		super();

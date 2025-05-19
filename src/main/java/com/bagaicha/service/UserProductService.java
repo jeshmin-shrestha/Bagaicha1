@@ -8,7 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProductService {
-    
+	/**
+     * Retrieves the latest 4 featured plants ordered by their added date (descending).
+     * Typically used for homepage display.
+     * 
+     * @return List<PlantModel> list of featured PlantModel objects
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     // Method to get featured plants (for homepage display)
 	public List<PlantModel> getFeaturedPlants() throws ClassNotFoundException {
 	    System.out.println("DEBUG: Starting getFeaturedPlants()");
@@ -43,6 +49,12 @@ public class UserProductService {
 	    }
 	    return plants;
 	}
+	 /**
+     * Retrieves all plants available in the database.
+     * 
+     * @return List<PlantModel> list of all PlantModel objects
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     // Method to get all plants
 	public List<PlantModel> getAllPlants() throws ClassNotFoundException {
 	    List<PlantModel> plants = new ArrayList<>();
@@ -61,7 +73,13 @@ public class UserProductService {
 	    }
 	    return plants;
 	}
-    
+	 /**
+     * Retrieves a single plant by its unique ID.
+     * 
+     * @param id int the unique identifier of the plant
+     * @return PlantModel the PlantModel object matching the ID, or null if not found
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     // Method to get a single plant by ID
     public PlantModel getPlantById(int id) throws ClassNotFoundException {
         PlantModel plant = null;
@@ -81,7 +99,13 @@ public class UserProductService {
         }
         return plant;
     }
-    
+    /**
+     * Retrieves plants that belong to a specific category.
+     * 
+     * @param categoryId int the ID of the category
+     * @return List<PlantModel> list of plants within the specified category
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     // Method to get plants by category
     public List<PlantModel> getPlantsByCategory(int categoryId) throws ClassNotFoundException {
         List<PlantModel> plants = new ArrayList<>();
@@ -102,7 +126,13 @@ public class UserProductService {
         }
         return plants;
     }
-    
+    /**
+     * Helper method to map the current row of a ResultSet to a PlantModel object.
+     * 
+     * @param resultSet ResultSet the ResultSet positioned at a valid row
+     * @return PlantModel the mapped PlantModel object
+     * @throws SQLException if any SQL error occurs during reading the ResultSet
+     */
     // Helper method to map ResultSet to PlantModel
     private PlantModel mapResultSetToPlant(ResultSet resultSet) throws SQLException {
         PlantModel plant = new PlantModel();
@@ -136,7 +166,14 @@ public class UserProductService {
         return plant;
   
     }
-    
+    /**
+     * Searches for plants where the plant name or scientific name contains the given keyword.
+     * The search is case-insensitive and supports partial matches.
+     * 
+     * @param keyword String the search keyword to look for in plant names or scientific names
+     * @return List<PlantModel> list of plants matching the search criteria
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     // Method to search plants by name or scientific name
     public List<PlantModel> searchPlants(String keyword) throws ClassNotFoundException {
         List<PlantModel> plants = new ArrayList<>();

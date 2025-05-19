@@ -14,7 +14,11 @@ import java.io.IOException;
 
 import com.bagaicha.util.CookieUtil;
 import com.bagaicha.util.SessionUtil;
-
+/**
+ * AuthenticationFilter intercepts all incoming HTTP requests (/*)
+ * to enforce authentication and authorization based on user roles.
+ * @author Jeshmin Shrestha
+ */
 @WebFilter(asyncSupported = true, urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 

@@ -14,9 +14,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 /**
- * LoginController is responsible for handling login requests. It interacts with
- * the LoginService to authenticate users.
+ * LoginController is responsible for handling login requests.
+ * It interacts with the LoginService to authenticate users and manages session/cookie logic.
+ *  @author Jeshmin Shrestha
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
@@ -31,12 +33,12 @@ public class LoginController extends HttpServlet {
 	}
 
 	/**
-	 * Handles GET requests to the login page.
+	 * Handles GET requests to load the login page.
 	 *
-	 * @param request  HttpServletRequest object
-	 * @param response HttpServletResponse object
+	 * @param request  the HttpServletRequest object containing the client request
+	 * @param response the HttpServletResponse object for the servlet's response
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException      if an input or output error occurs
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,12 +47,13 @@ public class LoginController extends HttpServlet {
 	}
 
 	/**
-	 * Handles POST requests for user login.
+	 * Handles POST requests for authenticating the user.
+	 * Validates input, checks credentials, sets session attributes and cookies.
 	 *
-	 * @param request  HttpServletRequest object
-	 * @param response HttpServletResponse object
+	 * @param req  the HttpServletRequest object containing login data
+	 * @param resp the HttpServletResponse object for redirection
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException      if an input or output error occurs
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -82,14 +85,13 @@ public class LoginController extends HttpServlet {
 
 
 	/**
-	 * Handles login failures by setting attributes and forwarding to the login
-	 * page.
+	 * Handles failed login attempts by setting error messages and forwarding back to login page.
 	 *
-	 * @param req         HttpServletRequest object
-	 * @param resp        HttpServletResponse object
-	 * @param loginStatus Boolean indicating the login status
+	 * @param req         the HttpServletRequest object
+	 * @param resp        the HttpServletResponse object
+	 * @param loginStatus Boolean indicating login success or server issue (null)
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException      if an input or output error occurs
 	 */
 	private void handleLoginFailure(HttpServletRequest req, HttpServletResponse resp, Boolean loginStatus)
 			throws ServletException, IOException {

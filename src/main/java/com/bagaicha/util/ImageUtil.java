@@ -11,6 +11,7 @@ import jakarta.servlet.http.Part;
  * This class provides methods for extracting the file name from a {@link Part}
  * object and uploading the image file to a specified directory on the server.
  * </p>
+ * @author Jeshmin Shrestha
  */
 public class ImageUtil {
 
